@@ -19,7 +19,7 @@ Some basic Git commands are:
 
 ```
 $ git clone https://github.com/MahamdSirafi/user-Authentication-Authorization.git
-$ cd project
+$ cd user-Authentication-Authorization
 $ npm install
 ```
 
