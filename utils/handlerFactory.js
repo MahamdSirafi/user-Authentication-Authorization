@@ -88,7 +88,6 @@ exports.getAllpop = (Model, pop) =>
       doc,
     });
   });
-
 exports.getAllpop1 = (Model, ...pop) =>
   catchAsync(async (req, res, next) => {
     let features = new APIFeatures(Model.find(), req.query).filter();
@@ -103,5 +102,23 @@ exports.getAllpop1 = (Model, ...pop) =>
       status: "success",
       results: doc.length,
       doc,
+    });
+  });
+exports.getField = (Model, field, filter) =>
+  catchAsync(async (req, res, next) => {
+    if (filter && req.params[Object.values(filter)[0]]) {
+      const keys = Object.keys(filter);
+      const firstKey = keys[0];
+      filter[firstKey] = req.params[Object.values(filter)[0]];
+    }
+    const arrOpj = await Model.find(filter, { [field]: 1, _id: 0 });
+    arrOpj.forEach((item, index) => {
+      arrOpj[index] = item[field];
+    });
+    let doc = [...new Set(arrOpj)];
+    res.status(200).json({
+      status: "success",
+      results: doc.length,
+      doc: doc,
     });
   });
