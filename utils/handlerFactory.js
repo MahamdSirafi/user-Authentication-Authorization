@@ -12,12 +12,34 @@ exports.deleteOne = (Model) =>
       data: null,
     });
   });
+exports.delete = (Model, filter) =>
+  catchAsync(async (req, res, next) => {
+    const doc = await Model.deleteMany(filter);
+    if (!doc) {
+      return next(new AppError("No document found with that filter", 404));
+    }
+    res.status(200).json({
+      status: "success",
+      data: null,
+    });
+  });
 exports.updateOne = (Model) =>
   catchAsync(async (req, res, next) => {
     const doc = await Model.findByIdAndUpdate(req.params.id, req.body, {
       new: true,
       runValidators: true,
     });
+    if (!doc) {
+      return next(new AppError("No document found with that ID", 404));
+    }
+    res.status(200).json({
+      status: "success",
+      doc,
+    });
+  });
+exports.update = (Model, filter, update) =>
+  catchAsync(async (req, res, next) => {
+    const doc = await Model.updateMany(filter, update);
     if (!doc) {
       return next(new AppError("No document found with that ID", 404));
     }
@@ -120,5 +142,49 @@ exports.getField = (Model, field, filter) =>
       status: "success",
       results: doc.length,
       doc: doc,
+    });
+  });
+exports.statisticsWithLink = (Model, price, from, foreignField, ...field) =>
+  catchAsync(async (req, res, next) => {
+    const doc = await Model.aggregate([
+      {
+        $lookup: {
+          from: from,
+          localField: foreignField,
+          foreignField: "_id",
+          as: foreignField,
+        },
+      },
+      {
+        $project: {
+          _id: 0,
+          [price]: 1,
+          [field[0]]: 1,
+          [field[1]]: 1,
+          [field[2]]: 1,
+          [field[3]]: 1,
+          [field[4]]: 1,
+          [field[5]]: 1,
+          [field[6]]: 1,
+          year: { $year: "$createdAt" },
+          month: { $month: "$createdAt" },
+          day: { $dayOfMonth: "$createdAt" },
+        },
+      },
+      {
+        $match: { year: {$gte:+req.params.year||1970,$lte:+req.params.year||3000}, month: {$gte:+req.params.month||1970,$lte:+req.params.month||3000} },
+      },
+      {
+        $group: {
+          _id: `$${foreignField}`,
+          totalOrders: { $sum: 1 },
+          totalPrice: { $sum: `$${price}` },
+          avglPrice: { $avg: `$${price}` },
+        },
+      },
+    ]);
+    res.status(200).json({
+      status: "success",
+      doc,
     });
   });

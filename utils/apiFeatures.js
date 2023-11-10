@@ -118,7 +118,7 @@ class APIFeatures {
         group[index] = `$${item}`;
       });
       let maxyear = objAgg.year || 3000;
-      let minyear = objAgg.year || 2000;
+      let minyear = objAgg.year || 1970;
       let data = {
         group: group[0],
         max: objAgg.max,
