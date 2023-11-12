@@ -40,9 +40,14 @@ exports.updateOne = (Model) =>
 exports.update = (Model, filter, update) =>
   catchAsync(async (req, res, next) => {
     const doc = await Model.updateMany(filter, update);
-    if (!doc) {
-      return next(new AppError("No document found with that ID", 404));
-    }
+    res.status(200).json({
+      status: "success",
+      doc,
+    });
+  });
+exports.delete = (Model, filter) =>
+  catchAsync(async (req, res, next) => {
+    const doc = await Model.updateMany(filter);
     res.status(200).json({
       status: "success",
       doc,
@@ -172,14 +177,25 @@ exports.statisticsWithLink = (Model, price, from, foreignField, ...field) =>
         },
       },
       {
-        $match: { year: {$gte:+req.params.year||1970,$lte:+req.params.year||3000}, month: {$gte:+req.params.month||1970,$lte:+req.params.month||3000} },
+        $match: {
+          year: {
+            $gte: +req.params.year || 1970,
+            $lte: +req.params.year || 3000,
+          },
+          month: {
+            $gte: +req.params.month || 1970,
+            $lte: +req.params.month || 3000,
+          },
+        },
       },
       {
         $group: {
           _id: `$${foreignField}`,
-          totalOrders: { $sum: 1 },
-          totalPrice: { $sum: `$${price}` },
-          avglPrice: { $avg: `$${price}` },
+          count: { $sum: 1 },
+          total: { $sum: `$${price}` },
+          avg: { $avg: `$${price}` },
+          max: { $max: `$${price}` },
+          min: { $min: `$${price}` },
         },
       },
     ]);
