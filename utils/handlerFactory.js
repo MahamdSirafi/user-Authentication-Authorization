@@ -133,12 +133,13 @@ exports.getAllpop1 = (Model, ...pop) =>
   });
 exports.getField = (Model, field, filter) =>
   catchAsync(async (req, res, next) => {
+    let newfilter = {};
     if (filter && req.params[Object.values(filter)[0]]) {
       const keys = Object.keys(filter);
       const firstKey = keys[0];
-      filter[firstKey] = req.params[Object.values(filter)[0]];
+      newfilter[firstKey] = req.params[Object.values(filter)[0]];
     }
-    const arrOpj = await Model.find(filter, { [field]: 1, _id: 0 });
+    const arrOpj = await Model.find(newfilter, { [field]: 1, _id: 0 });
     arrOpj.forEach((item, index) => {
       arrOpj[index] = item[field];
     });

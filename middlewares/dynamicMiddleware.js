@@ -1,8 +1,9 @@
 exports.addQuery = (variableName, value) => {
   return (req, res, next) => {
-    if (req.params[value]) value = req.params[value];
-    if (value == "userId") value = req.user._id;
-    req.query[variableName] = value;
+    let newValue;
+    if (req.params[value]) newValue = req.params[value];
+    if (value == "userId") newValue = req.user._id;
+    req.query[variableName] = newValue || value;
     next();
   };
 };
@@ -14,8 +15,9 @@ exports.addBody = (value) => {
 };
 exports.addVarBody = (variableName, value) => {
   return (req, res, next) => {
-    if (value == "userId") value = req.user._id;
-    req.body[variableName] = value;
+    let newValue;
+    if (value == "userId") newValue = req.user._id;
+    req.body[variableName] = newValue || value;
     next();
   };
 };
@@ -29,7 +31,6 @@ exports.filteredBody =
     req.body = newObj;
     next();
   };
-
 exports.setPathImginBody =
   (folder, ...filedImg) =>
   (req, res, next) => {
@@ -38,7 +39,6 @@ exports.setPathImginBody =
         "host"
       )}/img/${folder}/${req.file.filename}`;
     } else {
-      console.log(req.files);
       filedImg.forEach((item) => {
         if (req.files[item])
           req.body[item] = `${req.protocol}://${req.get(
