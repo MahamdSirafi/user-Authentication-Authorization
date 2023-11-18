@@ -45,9 +45,7 @@ The project includes robust error handling mechanisms to gracefully handle and r
 
 ## Database Seed
 
-- The seed command will create an admin user in the database
-- The email and password are passed with the command as arguments
-- Like below command, replace brackets with email and password.
+- create an admin user in the database
 
 ## Install
 
