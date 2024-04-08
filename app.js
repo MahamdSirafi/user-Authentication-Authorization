@@ -6,11 +6,12 @@ const mongoSanitize = require('express-mongo-sanitize');
 const xss = require('xss-clean');
 const hpp = require('hpp');
 const cookieParser = require('cookie-parser');
-const bodyParser = require('body-parser');
 const compression = require('compression');
 const cors = require('cors');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv').config();
+const swaggerUI = require('swagger-ui-express');
+const swaggerSpec = require('./swagger/swagger');
 const AppError = require('./utils/appError');
 const errorGlobal = require('./controllers/errorController');
 // Start express app
@@ -68,13 +69,14 @@ app.use(xss());
 app.use(
   hpp({
     whitelist: ['duration', 'difficulty', 'price'],
-  })
+  }),
 );
 //ضغط البيانات قبل ارسالها من اجل تسريع النقل
 app.use(compression());
 const userRouter = require('./routes/userRoutes');
 
 // 3) ROUTES
+app.use('/docs', swaggerUI.serve, swaggerUI.setup(swaggerSpec));
 app.use('/', userRouter);
 app.use('/api/v1.0.0/users', userRouter);
 //في حال طلب مورد غير موجود
@@ -94,7 +96,8 @@ mongoose
   .then((result) => {
     app.listen(process.env.PORT, () => {
       console.log(
-        `Example app listening at http://localhost:${process.env.PORT}`
+        `Example app listening at http://localhost:${process.env.PORT}
+Example app listening at http://localhost:${process.env.PORT}/docs`,
       );
     });
   })
