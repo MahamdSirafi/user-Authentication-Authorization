@@ -353,7 +353,58 @@
  *         content:
  *           application/json:
  *             schema:
- *                $ref: '#/components/schemas/User'
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: string
+ *                   example: success
+ *                 doc:
+ *                   $ref: '#/components/schemas/User'
+ *       "400":
+ *         $ref: '#/components/responses/DuplicateEmail'
+ *       "401":
+ *         $ref: '#/components/responses/Unauthorized'
+ *       "403":
+ *         $ref: '#/components/responses/Forbidden'
+ *       "404":
+ *         $ref: '#/components/responses/NotFound'
+ */
+
+/**
+ * @swagger
+ * /users/updateMeAndUpload:
+ *   patch:
+ *     summary: Update yor account
+ *     description: Logged in users can only update their own information
+ *     tags: [Users]
+ *     security:
+ *       - bearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         multipart/form-data:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               photo:
+ *                 type: file
+ *               email:
+ *                 type: string
+ *               name:
+ *                 type: string
+ *     responses:
+ *       "200":
+ *         description: OK
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: string
+ *                   example: success
+ *                 doc:
+ *                   $ref: '#/components/schemas/User'
  *       "400":
  *         $ref: '#/components/responses/DuplicateEmail'
  *       "401":
@@ -365,21 +416,21 @@
  */
 
 exports.User = {
-  type: 'object',
+  type: "object",
   properties: {
-    id: { type: 'string' },
-    email: { type: 'string', format: 'email' },
-    name: { type: 'string' },
-    role: { type: 'string', enum: ['user', 'admin'] },
-    photo: { type: 'string' },
-    active: { type: 'string' },
+    id: { type: "string" },
+    email: { type: "string", format: "email" },
+    name: { type: "string" },
+    role: { type: "string", enum: ["user", "admin"] },
+    photo: { type: "string" },
+    active: { type: "string" },
   },
   example: {
-    id: '5ebac534954b54139806c112',
-    email: 'fake@example.com',
-    name: 'fake name',
-    role: 'user',
-    photo: './public/img/dafult.jpg',
-    active: 'true',
+    id: "5ebac534954b54139806c112",
+    email: "fake@example.com",
+    name: "fake name",
+    role: "user",
+    photo: "./public/img/dafult.jpg",
+    active: "true",
   },
 };

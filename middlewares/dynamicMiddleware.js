@@ -1,3 +1,5 @@
+const catchAsync = require("../utils/catchAsync");
+const AppError = require("./../utils/appError");
 exports.addQuery = (variableName, value) => {
   return (req, res, next) => {
     let newValue;
@@ -16,11 +18,31 @@ exports.addBody = (value) => {
 exports.addVarBody = (variableName, value) => {
   return (req, res, next) => {
     let newValue;
+    if (req.params[value]) newValue = req.params[value];
     if (value == "userId") newValue = req.user._id;
     req.body[variableName] = newValue || value;
     next();
   };
 };
+exports.setIdWhatIsMainInQuery = (Model, fieldOwner, setIdInField) =>
+  catchAsync(async (req, res, next) => {
+    const thisDoc = await Model.findOne({ [fieldOwner]: req.user._id });
+    if (!thisDoc) {
+      return next(new AppError("You don't  have any thing", 403));
+    }
+    req.query[setIdInField] = thisDoc._id;
+    next();
+  });
+exports.setIdWhatIsMainInBody = (Model, fieldOwner, nameId) =>
+  catchAsync(async (req, res, next) => {
+    const thisDoc = await Model.findOne({ [fieldOwner]: req.user._id });
+    if (!thisDoc) {
+      return next(new AppError("You don't  have any thing", 403));
+    }
+    req.body[nameId] = thisDoc._id;
+    next();
+  });
+
 exports.filteredBody =
   (...allowedFields) =>
   (req, res, next) => {
@@ -44,7 +66,6 @@ exports.setPathImginBody =
           req.body[item] = `${req.protocol}://${req.get(
             "host"
           )}/img/${folder}/${req.files[item][0].filename}`;
-        console.log(req.body);
       });
     }
     next();

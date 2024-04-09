@@ -222,10 +222,12 @@ exports.updateMe = {
   properties: {
     name: { type: "string" },
     email: { type: "string" },
+    photo: { type: "string" },
   },
   example: {
     name: "bahaa",
     email: "bahaa@gmail.com",
+    photo: "./public/img/users/dafult.jpg",
   },
 };
 exports.signUp = {
