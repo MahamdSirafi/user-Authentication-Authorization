@@ -23,14 +23,13 @@
     "nodemailer": "^6.9.6",
     "nodemon": "^3.0.1",
     "pug": "^3.0.2",
-    "validator": "^13.11.0",
-    "xss-clean": "^0.1.4",
     "swagger-jsdoc": "^6.2.8",
-    "swagger-ui-express": "^5.0.0"
+    "swagger-ui-express": "^5.0.0",
+    "validator": "^13.11.0",
+    "xss-clean": "^0.1.4"
   },
   "devDependencies": {
     "morgan": "^1.10.0",
-    "prettier": "^3.2.1",
     "readline-sync": "^1.4.10"
   },
   "scripts": {

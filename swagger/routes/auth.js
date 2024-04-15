@@ -8,25 +8,53 @@
 /**
  * @swagger
  *   /users/signup:
- *     post:
- *       summary: Create a user
- *       tags: [Auth]
- *       requestBody:
- *         required: true
+ *   post:
+ *     summary: Register as user
+ *     tags: [Auth]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - name
+ *               - email
+ *               - password
+ *             properties:
+ *               name:
+ *                 type: string
+ *               email:
+ *                 type: string
+ *                 format: email
+ *                 description: must be unique
+ *               password:
+ *                 type: string
+ *                 format: password
+ *                 minLength: 8
+ *                 description: At least one number and one letter
+ *             example:
+ *               name: fake name
+ *               email: fake@example.com
+ *               password: password1
+ *     responses:
+ *       "201":
+ *         description: Created
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/signUp'
- *       responses:
- *         "400":
- *           $ref: '#/components/responses/400'
- *         "401":
- *           $ref: '#/components/responses/401'
- *         "201":
- *           description: user created successfully
- *           contents:
- *             application/json
- *
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: string
+ *                   example: success
+ *                 user:
+ *                   $ref: '#/components/schemas/User'
+ *                 tokens:
+ *                   type: string
+ *                   example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2MWQ4ZDJjZjBkMmM5NWNiOTM5OTgyZSIsImlhdCI6MTcxMzIxMjcxNywiZXhwIjoxNzIwOTg4NzE3fQ.FbARIC4jDWtOb0koNJK69F2MTu8j9LeS3RaFrT-AP7c
+ *       "400":
+ *         $ref: '#/components/responses/DuplicateEmail'
  */
 
 //                                                      login
@@ -218,29 +246,29 @@
  */
 
 exports.updateMe = {
-  type: "object",
+  type: 'object',
   properties: {
-    name: { type: "string" },
-    email: { type: "string" },
-    photo: { type: "string" },
+    name: { type: 'string' },
+    email: { type: 'string' },
+    photo: { type: 'string' },
   },
   example: {
-    name: "bahaa",
-    email: "bahaa@gmail.com",
-    photo: "./public/img/users/dafult.jpg",
+    name: 'bahaa',
+    email: 'bahaa@gmail.com',
+    photo: './public/img/users/dafult.jpg',
   },
 };
 exports.signUp = {
-  type: "object",
-  required: ["name", "email", "password"],
+  type: 'object',
+  required: ['name', 'email', 'password'],
   properties: {
-    name: { type: "string" },
-    email: { type: "string" },
-    password: { type: "string" },
+    name: { type: 'string' },
+    email: { type: 'string' },
+    password: { type: 'string' },
   },
   example: {
-    name: "bahaa",
-    email: "bahaa@gmail.com",
-    password: "test1234",
+    name: 'bahaa',
+    email: 'bahaa@gmail.com',
+    password: 'test1234',
   },
 };
