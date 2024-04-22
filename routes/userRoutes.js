@@ -2,7 +2,6 @@ const express = require('express');
 const userController = require('./../controllers/userController');
 const authController = require('./../controllers/authController');
 const authMiddlewers = require('./../middlewares/authMiddlewers');
-const imguserMiddlewers = require('./../middlewares/imguserMiddlewers');
 const dynamicImgMiddlewers = require('./../middlewares/dynamicImgMiddlewers');
 const router = express.Router();
 router.post('/login', authController.login);
@@ -13,9 +12,7 @@ router.get('/resetPassword/:token', (req, res) => {
   res.render('user/resetPassword4');
 });
 router.post('/signup', authController.signup);
-// router.use(authMiddlewers.protect);
 router.patch('/activeMe', authMiddlewers.protect, userController.activeMe);
-// router.use(authMiddlewers.isactive)
 router.patch(
   '/updateMyPassword',
   authMiddlewers.protect,
@@ -40,7 +37,6 @@ router.patch(
 );
 router.patch('/updateMe', authMiddlewers.protect, userController.updateMe);
 router.delete('/deleteMe', authMiddlewers.protect, userController.deleteMe);
-// router.use(authMiddlewers.restrictTo('admin'));
 router
   .route('/')
   .get(
