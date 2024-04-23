@@ -61,7 +61,7 @@
 
 /**
  * @swagger
- * /auth/login:
+ * /users/login:
  *   post:
  *     summary: Login
  *     tags: [Auth]
