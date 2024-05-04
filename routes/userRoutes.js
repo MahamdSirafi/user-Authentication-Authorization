@@ -2,7 +2,7 @@ const express = require('express');
 const userController = require('./../controllers/userController');
 const authController = require('./../controllers/authController');
 const authMiddlewers = require('./../middlewares/authMiddlewers');
-const dynamicImgMiddlewers = require('./../middlewares/dynamicImgMiddlewers');
+const imguserMiddlewers = require('./../middlewares/imguserMiddlewers');
 const router = express.Router();
 router.post('/login', authController.login);
 router.get('/logout', authController.logout);
@@ -27,12 +27,7 @@ router.get(
 router.patch(
   '/updateMeAndUpload',
   authMiddlewers.protect,
-  // imguserMiddlewers.uploadUserPhoto,
-  dynamicImgMiddlewers.uploadPhoto(
-    `public/img/users`,
-    `users_${Math.random() * 1000000}`,
-    `photo`
-  ),
+  imguserMiddlewers.uploadUserPhoto,
   userController.updateMe
 );
 router.patch('/updateMe', authMiddlewers.protect, userController.updateMe);
