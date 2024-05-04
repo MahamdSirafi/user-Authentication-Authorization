@@ -3,11 +3,10 @@ const AppError = require('../utils/appError');
 exports.uploadPhoto = (destination, fileNameInModel) => {
   const multerStorage = multer.diskStorage({
     destination: (req, file, cb) => {
-      cb(null, `publice/img/${destination}`);
+      cb(null, `public/img/${destination}`);
     },
     filename: (req, file, cb) => {
-      const ext = file.mimetype.split('/')[1];
-      cb(null, `${destination}-${file.originalname}.${ext}`);
+      cb(null, `${destination}-${file.originalname}`);
     },
   });
   const multerFilter = (req, file, cb) => {
