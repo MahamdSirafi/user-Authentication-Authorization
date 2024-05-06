@@ -1,26 +1,26 @@
 //1) crate file models
 
-const readlineSync = require("readline-sync");
-const fs = require("fs");
-const path = require("path");
+const readlineSync = require('readline-sync');
+const fs = require('fs');
+const path = require('path');
 let field, allfield, properties, codeproperties, type, ref;
 exports.crateModel = (createName) => {
-  if (!fs.existsSync("./models")) {
-    fs.mkdirSync("./models");
+  if (!fs.existsSync('./models')) {
+    fs.mkdirSync('./models');
   }
 
-  const fileNameModel = path.join("./models", createName + "Model" + ".js");
+  const fileNameModel = path.join('./models', createName + 'Model' + '.js');
   let codeModel = `const mongoose = require("mongoose");
 const ${createName}Schema = new mongoose.Schema({
   `;
-  allfield = "";
+  allfield = '';
   while (true) {
-    field = "";
-    properties = "";
-    codeproperties = "";
-    (type = ""), (ref = "");
-    if (readlineSync.keyInYN("Do you want add filed to this model?")) {
-      field = readlineSync.question("enter name field? ");
+    field = '';
+    properties = '';
+    codeproperties = '';
+    (type = ''), (ref = '');
+    if (readlineSync.keyInYN('Do you want add filed to this model?')) {
+      field = readlineSync.question('enter name field? ');
       // console.log(field);
       console.log(`Add a set of these properties to the field
 required or r
@@ -101,16 +101,17 @@ unique or u`);
   }
   codeModel += `${allfield}
 },{
-      timestamps: true
+      timestamps: true,
+      versionKey: false
     });
     const ${
       createName[0].toUpperCase() + createName.slice(1)
     } = mongoose.model("${
-      createName[0].toUpperCase() + createName.slice(1)
-    }", ${createName}Schema);
+    createName[0].toUpperCase() + createName.slice(1)
+  }", ${createName}Schema);
     module.exports = ${createName[0].toUpperCase() + createName.slice(1)};
     `;
-  console.log("Created successfully");
+  console.log('Created successfully');
 
-  fs.writeFileSync(fileNameModel, codeModel, "utf8");
+  fs.writeFileSync(fileNameModel, codeModel, 'utf8');
 };
