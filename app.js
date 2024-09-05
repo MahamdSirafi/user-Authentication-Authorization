@@ -69,7 +69,7 @@ app.use(xss());
 app.use(
   hpp({
     whitelist: ['duration', 'difficulty', 'price'],
-  }),
+  })
 );
 //ضغط البيانات قبل ارسالها من اجل تسريع النقل
 app.use(compression());
@@ -97,7 +97,7 @@ mongoose
     app.listen(process.env.PORT, () => {
       console.log(
         `Example app listening at http://localhost:${process.env.PORT}
-Example app listening at http://localhost:${process.env.PORT}/docs`,
+Example app listening at http://localhost:${process.env.PORT}/docs`
       );
     });
   })
@@ -118,3 +118,21 @@ Example app listening at http://localhost:${process.env.PORT}/docs`,
 //     console.log('💥 Process terminated!');
 //   });
 // });
+
+// //4) اتصال مع قاعدة البيانات الخارجية في اطلس باستخدام مكتبة مونغوس
+// const DB = process.env.DATABASE.replace(
+//     '<PASSWORD>',
+//     process.env.DATABASE_PASSWORD
+//   );
+//   mongoose
+//     .connect(DB,{
+//        useNewUrlParser: true,
+//        useCreateIndex: true,
+//        useFindAndModify: false
+//      }
+//   )
+//     .then(() => console.log('DB connection successful!'));
+//   const port = process.env.PORT ;
+//   const server = app.listen(port, () => {
+//     console.log(  `Example app listening at http://localhost:${process.env.PORT}`
+//   );});

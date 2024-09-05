@@ -1,3 +1,4 @@
+const { Recipient, EmailParams, MailerSend, Sender } = require('mailersend');
 const nodemailer = require('nodemailer');
 const pug = require('pug');
 const { htmlToText } = require('html-to-text');
@@ -69,6 +70,38 @@ module.exports = class Email {
   }
   async sendPasswordReset() {
     await this.send(
+      'passwordReset',
+      'Your password reset token (valid for only 10 minutes)'
+    );
+  }
+  /////////////////////////////////
+
+  async sendEmail( template, subject ) {
+    const mailersend = new MailerSend({
+      apiKey: process.env.EMAIL_API_KEY,
+    });
+    const html = pug.renderFile(`${__dirname}/../views/email/${template}.pug`, {
+      firstName: this.firstName,
+      url: this.url,
+      subject,
+    });
+    const recipients = [new Recipient(this.to, 'Recipient')];
+    const sender = new Sender(process.env.EMAIL_FROM, 'Sender');
+
+    const emailParams = new EmailParams()
+      .setFrom(sender)
+      .setTo(recipients)
+      .setSubject(subject)
+      .setHtml(html)
+      .setText(htmlToText(html));
+    await mailersend.email.send(emailParams);
+  }
+
+  async welcomeMailerSend() {
+    await this.sendEmail('welcome', 'Welcome to the NameProject Family!');
+  }
+  async sendPasswordResetMailerSend() {
+    await this.sendEmail(
       'passwordReset',
       'Your password reset token (valid for only 10 minutes)'
     );

@@ -33,7 +33,11 @@ exports.signup = catchAsync(async (req, res, next) => {
     password: req.body.password,
   });
   const url = `${req.protocol}://${req.get('host')}/me`;
-  // await new Email(newUser, url).sendWelcome();
+  await new Email(newUser, url)
+    .welcomeMailerSend()
+    // .catch(async (er) => {
+    //   await User.deleteOne({ id: newUser.id });
+    // });
   createSendToken(newUser, 201, req, res);
 });
 exports.login = catchAsync(async (req, res, next) => {
@@ -73,7 +77,7 @@ exports.forgotPassword = catchAsync(async (req, res, next) => {
     const resetURL = `${req.protocol}://${req.get('host')}${req.originalUrl
       .split('/', 4)
       .join('/')}/resetPassword/${resetToken}`;
-    await new Email(user, resetURL).sendPasswordReset();
+    await new Email(user, resetURL).sendPasswordResetMailerSend();
     res.status(200).json({
       status: 'success',
       message: 'Token sent to email!',
