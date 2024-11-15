@@ -16,19 +16,19 @@ router.patch('/activeMe', authMiddlewers.protect, userController.activeMe);
 router.patch(
   '/updateMyPassword',
   authMiddlewers.protect,
-  authController.updatePassword
+  authController.updatePassword,
 );
 router.get(
   '/me',
   authMiddlewers.protect,
   userController.getMe,
-  userController.getUser
+  userController.getUser,
 );
 router.patch(
   '/updateMeAndUpload',
   authMiddlewers.protect,
   imguserMiddlewers.uploadUserPhoto,
-  userController.updateMe
+  userController.updateMe,
 );
 router.patch('/updateMe', authMiddlewers.protect, userController.updateMe);
 router.delete('/deleteMe', authMiddlewers.protect, userController.deleteMe);
@@ -38,13 +38,13 @@ router
     authMiddlewers.protect,
     authMiddlewers.isactive,
     authMiddlewers.restrictTo('admin'),
-    userController.getAllUsers
+    userController.getAllUsers,
   )
   .post(
     authMiddlewers.protect,
     authMiddlewers.isactive,
     authMiddlewers.restrictTo('admin'),
-    userController.createUser
+    userController.createUser,
   );
 router
   .route('/:id')
@@ -52,18 +52,18 @@ router
     authMiddlewers.protect,
     authMiddlewers.isactive,
     authMiddlewers.restrictTo('admin'),
-    userController.getUser
+    userController.getUser,
   )
   .patch(
     authMiddlewers.protect,
     authMiddlewers.isactive,
     authMiddlewers.restrictTo('admin'),
-    userController.updateUser
+    userController.updateUser,
   )
   .delete(
     authMiddlewers.protect,
     authMiddlewers.isactive,
     authMiddlewers.restrictTo('admin'),
-    userController.deleteUser
+    userController.deleteUser,
   );
 module.exports = router;

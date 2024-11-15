@@ -30,10 +30,17 @@
     "xss-clean": "^0.1.4"
   },
   "devDependencies": {
-    "morgan": "^1.10.0",
-    "readline-sync": "^1.4.10"
+    "hygen": "^6.2.11",
+    "morgan": "^1.10.0"
   },
   "scripts": {
-    "start": "nodemon app.js"
+    "start": "nodemon app.js",
+    "format": "prettier --write \"**/*.js\" ",
+    "generate:resource:document": "hygen generate document-resource",
+    "postgenerate:resource:document": "npm run format",
+    "add:property:object": "hygen property add-to-object",
+    "postadd:property:object": "npm run format",
+    "add:property:document": "hygen property add-to-document",
+    "postadd:property:document": "npm run format"
   }
 }

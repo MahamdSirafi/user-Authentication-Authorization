@@ -11,13 +11,13 @@ class APIFeatures {
       search = queryObj.search;
     }
     const excludedFields = [
-      "page",
-      "sort",
-      "limit",
-      "fields",
-      "search",
-      "agg",
-      "aggDate",
+      'page',
+      'sort',
+      'limit',
+      'fields',
+      'search',
+      'agg',
+      'aggDate',
     ];
     excludedFields.forEach((el) => delete queryObj[el]);
     // 1B) Advanced filtering
@@ -25,7 +25,7 @@ class APIFeatures {
     // console.log(typeof queryStr, queryStr);
     queryStr = queryStr.replace(
       /\b(gte|gt|lte|lt|ne)\b/g,
-      (match) => `$${match}`
+      (match) => `$${match}`,
     );
     // Add search condition
     if (search) {
@@ -38,20 +38,20 @@ class APIFeatures {
   }
   sort() {
     if (this.queryString.sort) {
-      const sortBy = this.queryString.sort.split(",").join(" ");
+      const sortBy = this.queryString.sort.split(',').join(' ');
       this.query = this.query.sort(sortBy);
     } else {
-      this.query = this.query.sort("-createdAt");
+      this.query = this.query.sort('-createdAt');
     }
     return this;
   }
   limitFields() {
     if (this.queryString.fields) {
-      const fields = this.queryString.fields.split(",").join(" ");
+      const fields = this.queryString.fields.split(',').join(' ');
       // console.log("limitFields : ", fields);
       this.query = this.query.select(fields);
     } else {
-      this.query = this.query.select("-__v");
+      this.query = this.query.select('-__v');
     }
     return this;
   }
@@ -64,10 +64,10 @@ class APIFeatures {
   }
   agg() {
     if (this.queryString.agg) {
-      this.queryString.agg = this.queryString.agg.replaceAll("=", ":");
+      this.queryString.agg = this.queryString.agg.replaceAll('=', ':');
       this.queryString.agg = this.queryString.agg.replace(
         /(\[[a-zA-Z,]+\]|[a-zA-z.]+)/g,
-        (match) => `"${match}"`
+        (match) => `"${match}"`,
       );
       let objAgg = {};
       // console.log(this.queryString.agg);
@@ -77,7 +77,7 @@ class APIFeatures {
       let group = [...objAgg.group];
       group.pop();
       group.shift();
-      group = group.join("").split(",");
+      group = group.join('').split(',');
       // console.log(typeof group, group);
       group.forEach((item, index) => {
         group[index] = `$${item}`;
@@ -99,10 +99,10 @@ class APIFeatures {
   }
   aggDate() {
     if (this.queryString.aggDate) {
-      this.queryString.aggDate = this.queryString.aggDate.replaceAll("=", ":");
+      this.queryString.aggDate = this.queryString.aggDate.replaceAll('=', ':');
       this.queryString.aggDate = this.queryString.aggDate.replace(
         /(\[[a-zA-Z,]+\]|[a-zA-z.]+)/g,
-        (match) => `"${match}"`
+        (match) => `"${match}"`,
       );
       let objAgg = {};
       // console.log(this.queryString.aggDate);
@@ -112,7 +112,7 @@ class APIFeatures {
       let group = [...objAgg.group];
       group.pop();
       group.shift();
-      group = group.join("").split(",");
+      group = group.join('').split(',');
       // console.log(typeof group, group);
       group.forEach((item, index) => {
         group[index] = `$${item}`;
@@ -129,26 +129,26 @@ class APIFeatures {
         maxyear: maxyear,
       };
       switch (objAgg.date) {
-        case "date": {
-          this.query = this.aggregate(data, "$date");
+        case 'date': {
+          this.query = this.aggregate(data, '$date');
           break;
         }
-        case "year": {
-          this.query = this.aggregate(data, "$year");
+        case 'year': {
+          this.query = this.aggregate(data, '$year');
           break;
         }
-        case "month": {
+        case 'month': {
           this.query = this.aggregate(data, {
-            year: "$year",
-            month: "$month",
+            year: '$year',
+            month: '$month',
           });
           break;
         }
         default: {
           this.query = this.aggregate(data, {
-            year: "$year",
-            month: "$month",
-            day: "$day",
+            year: '$year',
+            month: '$month',
+            day: '$day',
           });
         }
       }
@@ -160,7 +160,7 @@ class APIFeatures {
       {
         $project: {
           date: {
-            $dateToString: { format: "%Y-%m-%d", date: data.group },
+            $dateToString: { format: '%Y-%m-%d', date: data.group },
           },
           year: { $year: data.group },
           month: { $month: data.group },

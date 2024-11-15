@@ -71,12 +71,12 @@ module.exports = class Email {
   async sendPasswordReset() {
     await this.send(
       'passwordReset',
-      'Your password reset token (valid for only 10 minutes)'
+      'Your password reset token (valid for only 10 minutes)',
     );
   }
   /////////////////////////////////
 
-  async sendEmail( template, subject ) {
+  async sendEmail(template, subject) {
     const mailersend = new MailerSend({
       apiKey: process.env.EMAIL_API_KEY,
     });
@@ -103,7 +103,7 @@ module.exports = class Email {
   async sendPasswordResetMailerSend() {
     await this.sendEmail(
       'passwordReset',
-      'Your password reset token (valid for only 10 minutes)'
+      'Your password reset token (valid for only 10 minutes)',
     );
   }
 };

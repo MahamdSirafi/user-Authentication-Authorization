@@ -1,28 +1,28 @@
-const swaggerJsDoc = require("swagger-jsdoc");
-const { updateMe, signUp } = require("./routes/auth");
-const { User } = require("./routes/users");
+const swaggerJsDoc = require('swagger-jsdoc');
+const { updateMe, signUp } = require('./routes/auth');
+const { User } = require('./routes/users');
 const {
   DuplicateEmail,
   Error,
   Forbidden,
   NotFound,
   Unauthorized,
-} = require("./components");
+} = require('./components');
 
 const options = {
-  url: "",
+  url: '',
   definition: {
-    openapi: "3.0.0",
+    openapi: '3.0.0',
     info: {
-      title: "REST API Docs",
-      version: "1.0.0",
+      title: 'REST API Docs',
+      version: '1.0.0',
       description:
-        "This is an API simpel Auth made with Express and documented with Swagger",
+        'This is an API simpel Auth made with Express and documented with Swagger',
     },
     servers: [
       {
-        url: "http://localhost:7000/api/v1.0.0",
-        description: "Development server",
+        url: 'http://localhost:7000/api/v1.0.0',
+        description: 'Development server',
       },
     ],
     components: {
@@ -34,9 +34,9 @@ const options = {
       },
       securitySchemes: {
         Bearer: {
-          type: "http",
-          scheme: "bearer",
-          bearerFormat: "JWT",
+          type: 'http',
+          scheme: 'bearer',
+          bearerFormat: 'JWT',
           description: 'Enter the token : abcde12345".',
         },
       },
@@ -46,33 +46,33 @@ const options = {
         NotFound,
         Unauthorized,
         201: {
-          description: "created",
+          description: 'created',
         },
         200: {
-          description: "ok",
+          description: 'ok',
         },
         204: {
-          description: "No content",
+          description: 'No content',
         },
         400: {
-          description: "Bad request",
+          description: 'Bad request',
         },
         401: {
-          description: "Unauthorized",
+          description: 'Unauthorized',
         },
         403: {
-          description: "Forbidden",
+          description: 'Forbidden',
         },
         404: {
-          description: "Not found",
+          description: 'Not found',
         },
         500: {
-          description: "Internal server error",
+          description: 'Internal server error',
         },
       },
     },
   },
-  apis: ["./swagger/routes/*.js"],
+  apis: ['./swagger/routes/*.js'],
 };
 const swaggerSpec = swaggerJsDoc(options);
 module.exports = swaggerSpec;

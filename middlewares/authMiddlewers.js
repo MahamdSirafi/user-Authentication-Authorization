@@ -16,7 +16,7 @@ exports.protect = catchAsync(async (req, res, next) => {
   }
   if (!token) {
     return next(
-      new AppError('You are not logged in! Please log in to get access.', 401)
+      new AppError('You are not logged in! Please log in to get access.', 401),
     );
   }
   // 2) Verification token
@@ -27,14 +27,14 @@ exports.protect = catchAsync(async (req, res, next) => {
     return next(
       new AppError(
         'The user belonging to this token does no longer exist.',
-        401
-      )
+        401,
+      ),
     );
   }
   // 4) Check if user changed password after the token was issued
   if (currentUser.changedPasswordAfter(decoded.iat)) {
     return next(
-      new AppError('User recently changed password! Please log in again.', 401)
+      new AppError('User recently changed password! Please log in again.', 401),
     );
   }
   // GRANT ACCESS TO PROTECTED ROUTE
@@ -49,7 +49,7 @@ exports.isLoggedIn = async (req, res, next) => {
       // 1) verify token
       const decoded = await promisify(jwt.verify)(
         req.cookies.jwt,
-        process.env.JWT_SECRET
+        process.env.JWT_SECRET,
       );
       // 2) Check if user still exists
       const currentUser = await User.findById(decoded.id);
@@ -74,17 +74,15 @@ exports.restrictTo = (...roles) => {
     // roles ['admin', 'lead-guide']. role='user'
     if (!roles.includes(req.user.role)) {
       return next(
-        new AppError('You do not have permission to perform this action', 403)
+        new AppError('You do not have permission to perform this action', 403),
       );
     }
     next();
   };
 };
 exports.isactive = (req, res, next) => {
-    if (req.user.active==false) {
-      return next(
-        new AppError('You are not active', 400)
-      );
-    }
-    next();
-  };
+  if (req.user.active == false) {
+    return next(new AppError('You are not active', 400));
+  }
+  next();
+};

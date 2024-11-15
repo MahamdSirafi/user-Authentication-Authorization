@@ -1,10 +1,10 @@
-const catchAsync = require("../utils/catchAsync");
-const AppError = require("./../utils/appError");
+const catchAsync = require('../utils/catchAsync');
+const AppError = require('./../utils/appError');
 exports.addQuery = (variableName, value) => {
   return (req, res, next) => {
     let newValue;
     if (req.params[value]) newValue = req.params[value];
-    if (value == "userId") newValue = req.user._id;
+    if (value == 'userId') newValue = req.user._id;
     req.query[variableName] = newValue || value;
     next();
   };
@@ -19,7 +19,7 @@ exports.addVarBody = (variableName, value) => {
   return (req, res, next) => {
     let newValue;
     if (req.params[value]) newValue = req.params[value];
-    if (value == "userId") newValue = req.user._id;
+    if (value == 'userId') newValue = req.user._id;
     req.body[variableName] = newValue || value;
     next();
   };
@@ -58,13 +58,13 @@ exports.setPathImginBody =
   (req, res, next) => {
     if (req.file) {
       req.body[filedImg] = `${req.protocol}://${req.get(
-        "host"
+        'host',
       )}/img/${folder}/${req.file.filename}`;
     } else {
       filedImg.forEach((item) => {
         if (req.files[item])
           req.body[item] = `${req.protocol}://${req.get(
-            "host"
+            'host',
           )}/img/${folder}/${req.files[item][0].filename}`;
       });
     }

@@ -416,21 +416,21 @@
  */
 
 exports.User = {
-  type: "object",
+  type: 'object',
   properties: {
-    id: { type: "string" },
-    email: { type: "string", format: "email" },
-    name: { type: "string" },
-    role: { type: "string", enum: ["user", "admin"] },
-    photo: { type: "string" },
-    active: { type: "string" },
+    id: { type: 'string' },
+    email: { type: 'string', format: 'email' },
+    name: { type: 'string' },
+    role: { type: 'string', enum: ['user', 'admin'] },
+    photo: { type: 'string' },
+    active: { type: 'string' },
   },
   example: {
-    id: "5ebac534954b54139806c112",
-    email: "fake@example.com",
-    name: "fake name",
-    role: "user",
-    photo: "./public/img/dafult.jpg",
-    active: "true",
+    id: '5ebac534954b54139806c112',
+    email: 'fake@example.com',
+    name: 'fake name',
+    role: 'user',
+    photo: './public/img/dafult.jpg',
+    active: 'true',
   },
 };
