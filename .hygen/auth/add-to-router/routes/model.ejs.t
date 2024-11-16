@@ -1,7 +1,7 @@
 ---
 inject: true
 to: "./models/<%= h.inflection.transform(name, ['underscore', 'dasherize']) %>Model.js"
-after:  <%= h.inflection.transform(object, ['underscore', 'dasherize']) %>
+after:  \<creating\-property\-schema \/\>
 ---
 <% if (kind === 'reference') { -%>
   <% if (referenceType === 'oneToOne' || referenceType === 'manyToOne') { -%>
@@ -35,11 +35,11 @@ after:  <%= h.inflection.transform(object, ['underscore', 'dasherize']) %>
       <% } -%>
       <% } -%>
 <% } -%>
- <% if ((kind === 'reference' && referenceType === 'manyToOne' ) || kind === 'primitive') { -%>
- <% if ( isRequired  ) { -%>
+ <% if ((kind === 'reference' && referenceType !== 'oneToMany' && referenceType !== 'manyToMany') || kind !== 'reference') { -%>
+ <% if ( kind !== "object" && isRequired  ) { -%>
      required: [true, 'Please enter name  <%= property %>'],
 <% } -%>
- <%  if ((kind==='reference'&& referenceType === 'oneToOne') || (kind === 'primitive' && isUnique) ) { -%>
+ <%  if (kind !=="enum" && kind !== "object" && isUnique  ) { -%>
      unique: true,
 <% } -%>
 <% } -%>

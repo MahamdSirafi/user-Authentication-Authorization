@@ -12,3 +12,13 @@ exports.Env = {
   test: 'test',
 };
 // <creating-enum-type />
+
+exports.tr = {
+  ss: 'ss',
+  ff: 'ff',
+};
+
+exports.stat = {
+  ss: 'ss',
+  df: 'df',
+};

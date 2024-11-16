@@ -26,24 +26,6 @@ module.exports = {
         collectPromisesResults(() => {
           return prompter.prompt({
             type: 'input',
-            name: 'object',
-            message: "Object name (e.g. 'address')",
-            validate: (input) => {
-              if (!input.trim()) {
-                return 'Object name is required';
-              }
-              return true;
-            },
-            format: (input) => {
-              return input.trim();
-            },
-          });
-        }),
-      )
-      .then(
-        collectPromisesResults(() => {
-          return prompter.prompt({
-            type: 'input',
             name: 'property',
             message: "Property name (e.g. 'firstName')",
             validate: (input) => {
@@ -171,20 +153,9 @@ module.exports = {
       )
       .then(
         collectPromisesResults((values) => {
-          if (values.kind === 'reference')
-            return prompter.prompt({
-              type: 'confirm',
-              name: 'deleteChildren',
-              message: 'do you delete children when the parent is deleted?',
-              initial: true,
-            });
-        }),
-      )
-      .then(
-        collectPromisesResults((values) => {
           if (
             values.referenceType !== 'manyToMany' &&
-            values.referenceType !== 'oneToMany' &&
+            values.referenceType !== 'manyToOne' &&
             values.kind !== 'object'
           )
             return prompter.prompt({
@@ -198,21 +169,18 @@ module.exports = {
       )
       .then(
         collectPromisesResults((values) => {
-          if (values.kind === 'primitive')
+          if (
+            values.referenceType !== 'manyToMany' &&
+            values.referenceType !== 'manyToOne' &&
+            values.kind !== 'enum' &&
+            values.kind !== 'object'
+          )
             return prompter.prompt({
               type: 'confirm',
               name: 'isUnique',
               message: 'do you make it unique?',
               initial: true,
             });
-          return;
-        }),
-      )
-      .then(
-        collectPromisesResults((values) => {
-          if (!values.type) {
-            values.type = 'user';
-          }
           return;
         }),
       ),

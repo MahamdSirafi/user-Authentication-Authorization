@@ -35,11 +35,11 @@ after:  \<creating\-property\-schema \/\>
       <% } -%>
       <% } -%>
 <% } -%>
- <% if ((kind === 'reference' && referenceType !== 'oneToMany' && referenceType !== 'manyToMany') || kind !== 'reference') { -%>
- <% if ( kind !== "object" && isRequired  ) { -%>
+ <% if ((kind === 'reference' && referenceType === 'manyToOne' ) || kind === 'primitive') { -%>
+ <% if ( isRequired  ) { -%>
      required: [true, 'Please enter name  <%= property %>'],
 <% } -%>
- <%  if (kind !=="enum" && kind !== "object" && isUnique  ) { -%>
+ <%  if ((kind==='reference'&& referenceType === 'oneToOne') || (kind === 'primitive' && isUnique) ) { -%>
      unique: true,
 <% } -%>
 <% } -%>

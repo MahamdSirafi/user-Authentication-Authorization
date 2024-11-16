@@ -76,9 +76,9 @@ app.use(compression());
 //R <dont remove this line>
 const userRouter = require('./routes/userRoutes');
 
-//ROUTES <dont remove this line>
 app.use('/docs', swaggerUI.serve, swaggerUI.setup(swaggerSpec));
-app.use('/', userRouter);
+app.use('/', swaggerUI.serve, swaggerUI.setup(swaggerSpec));
+//ROUTES <dont remove this line>
 app.use('/api/v1.0.0/users', userRouter);
 //في حال طلب مورد غير موجود
 app.all('*', (req, res, next) => {

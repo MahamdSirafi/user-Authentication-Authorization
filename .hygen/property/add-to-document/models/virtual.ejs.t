@@ -1,22 +1,24 @@
 ---
 inject: true
 to: "./models/<%= h.inflection.transform(name, ['underscore', 'dasherize']) %>Model.js"
-before: module.exports = <%= h.inflection.capitalize(name) %>;
+after: "// <creating-function-schema />"
 ---
-
 <% if (kind === 'reference') { -%>
   <% if (referenceType === 'oneToOne' || referenceType === 'manyToOne') { -%>
-  <%= h.inflection.transform(name, ['underscore', 'dasherize']) %>Schema .virtual('<%= h.inflection.camelize(h.inflection.singularize(property), true) %>', {
-    localField: '<%= h.inflection.camelize(h.inflection.singularize(property), true) %>Id',
-    foreignField: '_id',
-    ref: '<%= type %>',
-    justOne: true,
+  <%= h.inflection.transform(name, ['underscore', 'dasherize']) %>Schema.pre(/^find/, function (next) {
+  this.populate({
+    path: '<%= h.inflection.camelize(h.inflection.singularize(property), true) %>Id',
+    select: '-_id',
   });
-  <% } else if (referenceType === 'oneToMany' || referenceType === 'manyToMany') { -%>
-  <%= h.inflection.transform(name, ['underscore', 'dasherize']) %>Schema .virtual('<%= h.inflection.camelize(h.inflection.pluralize(property), true) %>', {
-    localField: '<%= h.inflection.camelize(h.inflection.singularize(property), true) %>Ids',
-    foreignField: '_id',
-    ref: '<%= type %>',
+  next();
+});
+  <% } else { -%>
+  <%= h.inflection.transform(name, ['underscore', 'dasherize']) %>Schema.pre(/^find/, function (next) {
+  this.populate({
+    path: '<%= h.inflection.camelize(h.inflection.singularize(property), true) %>Ids',
+    select: '-_id',
   });
-  <% } -%>
+  next();
+});
+<% } -%>
 <% } -%>
