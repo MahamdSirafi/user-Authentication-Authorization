@@ -1,3 +1,5 @@
+const { RoleCode } = require('../../../utils/enum');
+
 const collectPromisesResults = (callback) => async (prevValues) => {
   const results = await callback(prevValues);
 
@@ -45,24 +47,74 @@ module.exports = {
         collectPromisesResults((values) => {
           return eqValueFormat(values, 'name');
         }),
-      ),
-  // .then(
-  //   collectPromisesResults(() => {
-  //     return prompter.prompt({
-  //       type: 'input',
-  //       name: 'role',
-  //       message: "role name (e.g. 'ADMIN/USER')",
-  //       validate: (input) => {
-  //         if (!input.trim()) {
-  //           return 'role is required';
-  //         }
+      )
+      .then(
+        collectPromisesResults(() => {
+          return prompter.prompt({
+            type: 'multiselect',
+            name: 'roleGet',
+            message: 'choise role for GET',
+            choices: Object.keys(RoleCode).map((key, index) => {
+              return { name: key, value: key };
+            }),
+          });
+        }),
+      )
 
-  //         return true;
-  //       },
-  //       format: (input) => {
-  //         return input.trim();
-  //       },
-  //     });
-  //   }),
-  // ),
+      .then(
+        collectPromisesResults(() => {
+          return prompter.prompt({
+            type: 'multiselect',
+            name: 'rolePost',
+            message: 'choise role for Post',
+            choices: Object.keys(RoleCode).map((key, index) => {
+              return { name: key, value: key };
+            }),
+          });
+        }),
+      )
+
+      .then(
+        collectPromisesResults(() => {
+          return prompter.prompt({
+            type: 'multiselect',
+            name: 'roleDelete',
+            message: 'choise role for Delete',
+            choices: Object.keys(RoleCode).map((key, index) => {
+              return { name: key, value: key };
+            }),
+          });
+        }),
+      )
+      .then(
+        collectPromisesResults(() => {
+          return prompter.prompt({
+            type: 'multiselect',
+            name: 'roleUpdate',
+            message: 'choise role for update',
+            choices: Object.keys(RoleCode).map((key, index) => {
+              return { name: key, value: key };
+            }),
+          });
+        }),
+      )
+      .then(
+        collectPromisesResults(() => {
+          return prompter.prompt({
+            type: 'multiselect',
+            name: 'roleUpdate',
+            message: 'choise role for update',
+            choices: Object.keys(RoleCode).map((key, index) => {
+              return { name: key, value: key };
+            }),
+          });
+        }),
+      )
+      .then(
+        collectPromisesResults((values) => {
+          values.allRole = Object.keys(RoleCode).map((key, index) => {
+            return key;
+          });
+        }),
+      ),
 };
