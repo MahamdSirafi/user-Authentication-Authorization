@@ -3,7 +3,27 @@ const collectPromisesResults = (callback) => async (prevValues) => {
 
   return { ...prevValues, ...results };
 };
-
+const formatCamals = (input) => {
+  let arr = input.trim().split(' ');
+  for (let i = 1; i < arr.length; i++)
+    if (arr[i]) {
+      arr[i] = arr[i][0].toUpperCase() + arr[i].slice(1);
+    }
+  return arr.join('');
+};
+const eqValueFormat = (values, field) => {
+  values[field] = values[field]
+    .trim()
+    .split(' ')
+    .map((word, index) => {
+      if (index == 0) return word;
+      return word[0].toUpperCase() + word.slice(1);
+    })
+    .join('');
+  values[field.charAt(0).toUpperCase() + field.slice(1)] =
+    values[field].charAt(0).toUpperCase() + values[field].slice(1);
+  return values;
+};
 module.exports = {
   prompt: ({ prompter, args }) =>
     prompter
@@ -18,27 +38,12 @@ module.exports = {
           return true;
         },
         format: (input) => {
-          let arr = input.trim().split(' ');
-          for (let i = 1; i < arr.length; i++)
-            if (arr[i]) {
-              arr[i] = arr[i][0].toUpperCase() + arr[i].slice(1);
-            }
-          return arr.join('');
+          return formatCamals(input);
         },
       })
       .then(
         collectPromisesResults((values) => {
-          values.name = values.name
-            .trim()
-            .split(' ')
-            .map((word, index) => {
-              if (index == 0) return word;
-              return word[0].toUpperCase() + word.slice(1);
-            })
-            .join('');
-          values.Name =
-            values.name.charAt(0).toUpperCase() + values.name.slice(1);
-          return values;
+          return eqValueFormat(values, 'name');
         }),
       ),
   // .then(

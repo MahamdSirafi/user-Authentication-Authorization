@@ -3,6 +3,27 @@ const collectPromisesResults = (callback) => async (prevValues) => {
 
   return { ...prevValues, ...results };
 };
+const formatCamals = (input) => {
+  let arr = input.trim().split(' ');
+  for (let i = 1; i < arr.length; i++)
+    if (arr[i]) {
+      arr[i] = arr[i][0].toUpperCase() + arr[i].slice(1);
+    }
+  return arr.join('');
+};
+const eqValueFormat = (values, field) => {
+  values[field] = values[field]
+    .trim()
+    .split(' ')
+    .map((word, index) => {
+      if (index == 0) return word;
+      return word[0].toUpperCase() + word.slice(1);
+    })
+    .join('');
+  values[field.charAt(0).toUpperCase() + field.slice(1)] =
+    values[field].charAt(0).toUpperCase() + values[field].slice(1);
+  return values;
+};
 
 module.exports = {
   prompt: ({ prompter, args }) =>
@@ -19,9 +40,14 @@ module.exports = {
           return true;
         },
         format: (input) => {
-          return input.trim();
+          return formatCamals(input);
         },
       })
+      .then(
+        collectPromisesResults((values) => {
+          return eqValueFormat(values, 'name');
+        }),
+      )
       .then(
         collectPromisesResults(() => {
           return prompter.prompt({
@@ -35,9 +61,14 @@ module.exports = {
               return true;
             },
             format: (input) => {
-              return input.trim();
+              return formatCamals(input);
             },
           });
+        }),
+      )
+      .then(
+        collectPromisesResults((values) => {
+          return eqValueFormat(values, 'object');
         }),
       )
       .then(
@@ -54,9 +85,14 @@ module.exports = {
               return true;
             },
             format: (input) => {
-              return input.trim();
+              return formatCamals(input);
             },
           });
+        }),
+      )
+      .then(
+        collectPromisesResults((values) => {
+          return eqValueFormat(values, 'property');
         }),
       )
       .then(
@@ -74,21 +110,14 @@ module.exports = {
                 { message: 'Enum type', value: 'enum' },
                 { message: 'Reference to entity', value: 'reference' },
                 {
-                  message: 'Duplication data from entity',
-                  value: 'duplication',
-                },
-                {
-                  message: 'Object',
+                  message: 'Empty object',
                   value: 'object',
                 },
               ],
             })
             .then(
               collectPromisesResults((values) => {
-                if (
-                  values.kind === 'reference' ||
-                  values.kind === 'duplication'
-                ) {
+                if (values.kind === 'reference') {
                   return prompter
                     .prompt({
                       type: 'input',
@@ -102,9 +131,14 @@ module.exports = {
                         return true;
                       },
                       format: (input) => {
-                        return input.trim();
+                        return formatCamals(input);
                       },
                     })
+                    .then(
+                      collectPromisesResults((values) => {
+                        return eqValueFormat(values, 'type');
+                      }),
+                    )
                     .then(
                       collectPromisesResults((referenceValues) => {
                         return prompter.prompt({
@@ -145,9 +179,14 @@ module.exports = {
                         return true;
                       },
                       format: (input) => {
-                        return input.trim();
+                        return formatCamals(input);
                       },
                     })
+                    .then(
+                      collectPromisesResults((values) => {
+                        return eqValueFormat(values, 'enumType');
+                      }),
+                    )
                     .then(
                       collectPromisesResults((values) => {
                         return prompter.prompt({
@@ -182,6 +221,22 @@ module.exports = {
       )
       .then(
         collectPromisesResults((values) => {
+          if (
+            values.referenceType !== 'manyToMany' &&
+            values.referenceType !== 'oneToMany' &&
+            values.kind !== 'object'
+          )
+            return prompter.prompt({
+              type: 'confirm',
+              name: 'isRequired',
+              message: 'do you make it required?',
+              initial: true,
+            });
+          return;
+        }),
+      )
+      .then(
+        collectPromisesResults((values) => {
           if (values.kind !== 'reference')
             return prompter.prompt({
               type: 'confirm',
@@ -200,22 +255,6 @@ module.exports = {
               message: 'do you want it to be a index?',
               initial: true,
             });
-        }),
-      )
-      .then(
-        collectPromisesResults((values) => {
-          if (
-            values.referenceType !== 'manyToMany' &&
-            values.referenceType !== 'oneToMany' &&
-            values.kind !== 'object'
-          )
-            return prompter.prompt({
-              type: 'confirm',
-              name: 'isRequired',
-              message: 'do you make it required?',
-              initial: true,
-            });
-          return;
         }),
       )
       .then(

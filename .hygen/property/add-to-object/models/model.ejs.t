@@ -1,26 +1,26 @@
 ---
 inject: true
-to: "./models/<%= h.inflection.camelize(name) %>Model.js"
+to: "./models/<%= name %>Model.js"
 after: // \<creating\-property\-object\-<%= object %> \/\>
 ---
 <% if (kind === 'reference') { -%>
   <% if (referenceType === 'oneToOne' || referenceType === 'manyToOne') { -%>
   <%= property %>Id: {
       type: mongoose.Schema.ObjectId,
-      ref: '<%= h.inflection.titleize(type) %>',
+      ref: '<%= Type %>',
        <%  if  ( referenceType === 'oneToOne')  { -%>
      unique: true,
 <% } -%>
   <% } else  { -%>
-    <%= h.inflection.camelize(h.inflection.singularize(property), true) %>Ids: {
+    <%= property %>Ids: {
       type: [{
         type: mongoose.Schema.ObjectId,
-        ref: '<%= h.inflection.titleize(type) %>',
+        ref: '<%= Type %>',
         default: []
       }]
   <% } -%>
 <% } else if (kind === 'enum') { -%>
-  <%= h.inflection.camelize(h.inflection.singularize(property), true) %>: <% if (isArray) {-%>[ <% }-%>{
+  <%= property %>: <% if (isArray) {-%>[ <% }-%>{
       type: String,
       enum: Object.values(<%= enumType.replaceAll(' ','_') %>),
 <% } else { -%>

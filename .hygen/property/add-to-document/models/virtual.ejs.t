@@ -1,21 +1,21 @@
 ---
 inject: true
-to: "./models/<%=  h.inflection.camelize(name)%>Model.js"
+to: "./models/<%=  name %>Model.js"
 after: "// <creating-function-schema />"
 ---
 <% if (kind === 'reference') { -%>
   <% if (referenceType === 'oneToOne' || referenceType === 'manyToOne') { -%>
-  <%= h.inflection.transform(name, ['underscore', 'dasherize']) %>Schema.pre(/^find/, function (next) {
+  <%= name %>Schema.pre(/^find/, function (next) {
   this.populate({
-    path: '<%= h.inflection.camelize(h.inflection.singularize(property), true) %>Id',
+    path: '<%= property %>Id',
     select: '-_id',
   });
   next();
 });
   <% } else { -%>
-  <%= h.inflection.transform(name, ['underscore', 'dasherize']) %>Schema.pre(/^find/, function (next) {
+  <%= name %>Schema.pre(/^find/, function (next) {
   this.populate({
-    path: '<%= h.inflection.camelize(h.inflection.singularize(property), true) %>Ids',
+    path: '<%= property %>Ids',
     select: '-_id',
   });
   next();
