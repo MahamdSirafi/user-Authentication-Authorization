@@ -1,6 +1,6 @@
 ---
 inject: true
-to: "./models/<%= h.inflection.transform(name, ['underscore', 'dasherize']) %>Model.js"
+to: "./models/<%=  h.inflection.camelize(name)%>Model.js"
 after: "// <creating-function-schema />"
 ---
 <% if (kind === 'reference') { -%>

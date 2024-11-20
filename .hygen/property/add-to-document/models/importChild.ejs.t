@@ -1,8 +1,8 @@
 ---
 inject: true
-to:  "./models/<%= h.inflection.transform(type||'user', ['underscore', 'dasherize']) %>Model.js"
+to:  "./models/<%=  h.inflection.camelize(tupe) %>Model.js"
 at_line: 0
 ---
 <% if (kind === 'reference' && deleteChildren ) { -%>
- const <%= h.inflection.capitalize(name)  %> = require('./models/<%= h.inflection.transform(name, ['underscore', 'dasherize']) %>Model');
+ const <%= h.inflection.capitalize(name)  %> = require('./models/<%=  h.inflection.camelize(name) %>Model');
 <% } -%>

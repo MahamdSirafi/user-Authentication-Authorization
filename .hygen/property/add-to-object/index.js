@@ -182,6 +182,28 @@ module.exports = {
       )
       .then(
         collectPromisesResults((values) => {
+          if (values.kind !== 'reference')
+            return prompter.prompt({
+              type: 'confirm',
+              name: 'isArray',
+              message: 'do you want it to be a Array?',
+              initial: true,
+            });
+        }),
+      )
+      .then(
+        collectPromisesResults((values) => {
+          if (values.kind === 'primitive' && values.type === 'string')
+            return prompter.prompt({
+              type: 'confirm',
+              name: 'isText',
+              message: 'do you want it to be a index?',
+              initial: true,
+            });
+        }),
+      )
+      .then(
+        collectPromisesResults((values) => {
           if (
             values.referenceType !== 'manyToMany' &&
             values.referenceType !== 'oneToMany' &&

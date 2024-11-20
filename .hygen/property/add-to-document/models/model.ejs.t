@@ -7,23 +7,26 @@ after:  \<creating\-property\-schema \/\>
   <% if (referenceType === 'oneToOne' || referenceType === 'manyToOne') { -%>
   <%= property %>Id: {
       type: mongoose.Schema.ObjectId,
-      ref: '<%= h.inflection.capitalize(type) %>',
-  <% } else if (referenceType === 'oneToMany' || referenceType === 'manyToMany') { -%>
+      ref: '<%= h.inflection.titleize(type) %>',
+       <%  if  ( referenceType === 'oneToOne')  { -%>
+     unique: true,
+<% } -%>
+  <% } else  { -%>
     <%= h.inflection.camelize(h.inflection.singularize(property), true) %>Ids: {
       type: [{
         type: mongoose.Schema.ObjectId,
-        ref: '<%= h.inflection.capitalize(type) %>',
+        ref: '<%= h.inflection.titleize(type) %>',
         default: []
       }]
   <% } -%>
 <% } else if (kind === 'enum') { -%>
-  <%= h.inflection.camelize(h.inflection.singularize(property), true) %>: {
+  <%= h.inflection.camelize(h.inflection.singularize(property), true) %>: <% if (isArray) {-%>[ <% }-%>{
       type: String,
       enum: Object.values(<%= enumType.replaceAll(' ','_') %>),
 <% } else { -%>
-    <%= property %>: {
+    <%= property %>: <% if (isArray) {-%>[ <% }-%>{
       <% if (kind === 'object') { -%>
-      // <creating-property-object />
+      // <creating-property-object-<%= property %> />
       <% }-%>
       <% if (kind !== 'object') { -%>
       <% if (type === 'string') { -%>
@@ -39,8 +42,10 @@ after:  \<creating\-property\-schema \/\>
  <% if ( isRequired  ) { -%>
      required: [true, 'Please enter name  <%= property %>'],
 <% } -%>
- <%  if ((kind==='reference'&& referenceType === 'oneToOne') || (kind === 'primitive' && isUnique) ) { -%>
+ <%  if  (kind === 'primitive' && isUnique)  { -%>
      unique: true,
 <% } -%>
 <% } -%>
-},
+}
+<% if (kind !== 'reference' && isArray) {-%>] <% }-%>
+,

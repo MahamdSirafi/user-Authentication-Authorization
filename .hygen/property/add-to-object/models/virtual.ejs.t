@@ -1,11 +1,11 @@
 ---
 inject: true
-to: "./models/<%= h.inflection.transform(name, ['underscore', 'dasherize']) %>Model.js"
+to: "./models/<%=  h.inflection.camelize(name) %>Model.js"
 after: "// <creating-function-schema />"
 ---
 <% if (kind === 'reference') { -%>
   <% if (referenceType === 'oneToOne' || referenceType === 'manyToOne') { -%>
-  <%= h.inflection.transform(name, ['underscore', 'dasherize']) %>Schema.pre(/^find/, function (next) {
+  <%=  h.inflection.camelize(name) %>Schema.pre(/^find/, function (next) {
   this.populate({
     path: '<%=object%>.<%= h.inflection.camelize(h.inflection.singularize(property), true) %>Id',
     select: '-_id',
@@ -13,7 +13,7 @@ after: "// <creating-function-schema />"
   next();
 });
   <% } else if (referenceType === 'oneToMany' || referenceType === 'manyToMany') { -%>
-  <%= h.inflection.transform(name, ['underscore', 'dasherize']) %>Schema.pre(/^find/, function (next) {
+  <%=  h.inflection.camelize(name) %>Schema.pre(/^find/, function (next) {
   this.populate({
     path: '<%=object%>.<%= h.inflection.camelize(h.inflection.singularize(property), true) %>Ids',
     select: '-_id',

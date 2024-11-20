@@ -77,7 +77,6 @@ app.use(compression());
 const userRouter = require('./routes/userRoutes');
 
 app.use('/docs', swaggerUI.serve, swaggerUI.setup(swaggerSpec));
-app.use('/', swaggerUI.serve, swaggerUI.setup(swaggerSpec));
 //ROUTES <dont remove this line>
 app.use('/api/v1.0.0/users', userRouter);
 //في حال طلب مورد غير موجود

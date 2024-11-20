@@ -56,21 +56,14 @@ module.exports = {
                 { message: 'Enum type', value: 'enum' },
                 { message: 'Reference to entity', value: 'reference' },
                 {
-                  message: 'Duplication data from entity',
-                  value: 'duplication',
-                },
-                {
-                  message: 'Object',
+                  message: 'Empty object',
                   value: 'object',
                 },
               ],
             })
             .then(
               collectPromisesResults((values) => {
-                if (
-                  values.kind === 'reference' ||
-                  values.kind === 'duplication'
-                ) {
+                if (values.kind === 'reference') {
                   return prompter
                     .prompt({
                       type: 'input',
@@ -176,6 +169,28 @@ module.exports = {
               initial: true,
             });
           return;
+        }),
+      )
+      .then(
+        collectPromisesResults((values) => {
+          if (values.kind !== 'reference')
+            return prompter.prompt({
+              type: 'confirm',
+              name: 'isArray',
+              message: 'do you want it to be a Array?',
+              initial: true,
+            });
+        }),
+      )
+      .then(
+        collectPromisesResults((values) => {
+          if (values.kind === 'primitive' && values.type === 'string')
+            return prompter.prompt({
+              type: 'confirm',
+              name: 'isText',
+              message: 'do you want it to be a index?',
+              initial: true,
+            });
         }),
       )
       .then(
