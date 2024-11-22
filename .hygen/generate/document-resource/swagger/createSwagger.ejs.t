@@ -231,10 +231,11 @@ exports.<%= Name %> = {
   type: 'object',
   properties: {
     id: { type: 'string' },
+// property
   },
   example: {
     id: '5ebac534954b54139806c112',
-// property
+// property example
   },
 };
 exports.create<%= Name %> = {
@@ -245,6 +246,9 @@ exports.create<%= Name %> = {
   example: {
 // create property example
   },
+  required:[
+// required property
+  ]
 };
 exports.update<%= Name %> = {
   type: 'object',

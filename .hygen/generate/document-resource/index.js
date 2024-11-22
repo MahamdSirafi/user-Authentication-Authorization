@@ -99,18 +99,6 @@ module.exports = {
         }),
       )
       .then(
-        collectPromisesResults(() => {
-          return prompter.prompt({
-            type: 'multiselect',
-            name: 'roleUpdate',
-            message: 'choise role for update',
-            choices: Object.keys(RoleCode).map((key, index) => {
-              return { name: key, value: key };
-            }),
-          });
-        }),
-      )
-      .then(
         collectPromisesResults((values) => {
           values.allRole = Object.keys(RoleCode).map((key, index) => {
             return key;
