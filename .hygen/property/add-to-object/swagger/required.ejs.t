@@ -5,6 +5,6 @@ after: // required property
 ---
 <% if ((kind === 'reference' && referenceType === 'manyToOne' ) || kind === 'primitive') { -%>
 <% if (isRequired) { -%>
-'<%= property %>', 
+'<%= object %>.<%= property %>', 
 <% }  -%>
 <% } -%>

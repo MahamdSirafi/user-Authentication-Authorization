@@ -1,7 +1,7 @@
 ---
 inject: true
 to: "./swagger/routes/<%= name %>Swagger.js"
-after: // property example
+after: // update property example
 ---
 <% if (kind === 'primitive' && type === 'string') { -%>
 <%= property %>: <% if ( isArray) { -%>[<% } -%>'<%= example %>'<% if ( isArray) { -%>]<% } -%>,
@@ -19,9 +19,4 @@ after: // property example
 <% if (referenceType === 'oneToMany' || referenceType === 'manyToMany') { -%>
 <%= property %>Ids: ['673c40cd59e293827f79e398','673c40cd59e293827f79e399'],
 <% } -%>
-<% } -%>
-<% if (kind === 'object' ) { -%>
-<%= property %>: {
-// property example  <%= property %>
-},
 <% } -%>

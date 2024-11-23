@@ -112,10 +112,6 @@ module.exports = {
                 },
                 { message: 'Enum type', value: 'enum' },
                 { message: 'Reference to entity', value: 'reference' },
-                {
-                  message: 'Empty object',
-                  value: 'object',
-                },
               ],
             })
             .then(
@@ -262,7 +258,7 @@ module.exports = {
       )
       .then(
         collectPromisesResults((values) => {
-          if (values.kind === 'primitive')
+          if (values.kind === 'primitive' && values.type === 'string')
             return prompter.prompt({
               type: 'confirm',
               name: 'isUnique',

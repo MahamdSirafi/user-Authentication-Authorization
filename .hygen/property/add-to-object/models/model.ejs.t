@@ -25,10 +25,6 @@ after: // \<creating\-property\-object\-<%= object %> \/\>
       enum: Object.values(<%= enumType.replaceAll(' ','_') %>),
 <% } else { -%>
     <%= property %>: <% if (isArray) {-%>[ <% }-%>{
-      <% if (kind === 'object') { -%>
-      // <creating-property-object-<%= property %> />
-      <% }-%>
-      <% if (kind !== 'object') { -%>
       <% if (type === 'string') { -%>
       type: String,
       <% } else if (type === 'number') { -%>
@@ -42,9 +38,8 @@ after: // \<creating\-property\-object\-<%= object %> \/\>
  <% if ( isRequired  ) { -%>
      required: [true, 'Please enter name  <%= property %>'],
 <% } -%>
- <%  if  (kind === 'primitive' && isUnique)  { -%>
+ <%  if  (kind === 'primitive' && type === 'string' && isUnique)  { -%>
      unique: true,
-<% } -%>
 <% } -%>
 }
 <% if (kind !== 'reference' && isArray) {-%>] <% }-%>

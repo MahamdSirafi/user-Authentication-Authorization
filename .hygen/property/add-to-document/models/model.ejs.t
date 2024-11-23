@@ -42,7 +42,7 @@ after:  \<creating\-property\-schema \/\>
  <% if ( isRequired  ) { -%>
      required: [true, 'Please enter name  <%= property %>'],
 <% } -%>
- <%  if  (kind === 'primitive' && isUnique)  { -%>
+ <%  if  (kind === 'primitive' && type === 'string' && isUnique)  { -%>
      unique: true,
 <% } -%>
 <% } -%>

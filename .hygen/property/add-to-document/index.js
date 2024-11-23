@@ -239,7 +239,7 @@ module.exports = {
       )
       .then(
         collectPromisesResults((values) => {
-          if (values.kind === 'primitive')
+          if (values.kind === 'primitive' && values.type === 'string')
             return prompter.prompt({
               type: 'confirm',
               name: 'isUnique',

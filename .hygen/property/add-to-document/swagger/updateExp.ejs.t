@@ -22,6 +22,6 @@ after: // update property example
 <% } -%>
 <% if (kind === 'object' ) { -%>
 <%= property %>: {
-// <%= property %> object   
+// update property example  <%= property %>
 },
 <% } -%>

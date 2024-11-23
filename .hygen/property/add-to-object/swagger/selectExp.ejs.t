@@ -20,8 +20,3 @@ after: // property example
 <%= property %>Ids: ['673c40cd59e293827f79e398','673c40cd59e293827f79e399'],
 <% } -%>
 <% } -%>
-<% if (kind === 'object' ) { -%>
-<%= property %>: {
-// property example  <%= property %>
-},
-<% } -%>
