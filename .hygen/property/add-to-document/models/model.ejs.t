@@ -22,7 +22,7 @@ after:  \<creating\-property\-schema \/\>
 <% } else if (kind === 'enum') { -%>
   <%= property %>: <% if (isArray) {-%>[ <% }-%>{
       type: String,
-      enum: Object.values(<%= enumType.replaceAll(' ','_') %>),
+      enum: Object.values(<%= enumType %>),
 <% } else { -%>
     <%= property %>: <% if (isArray) {-%>[ <% }-%>{
       <% if (kind === 'object') { -%>

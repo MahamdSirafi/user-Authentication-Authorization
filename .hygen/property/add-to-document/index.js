@@ -265,6 +265,9 @@ module.exports = {
           if (!values.type) {
             values.type = 'user';
           }
+          if (!values.isArray) {
+            values.isArray = false;
+          }
           return;
         }),
       ),

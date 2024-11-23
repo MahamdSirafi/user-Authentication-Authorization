@@ -21,7 +21,7 @@ after: // property example
 <% } -%>
 <% } -%>
 <% if (kind === 'object' ) { -%>
-<%= property %>: {
+<%= property %>: <% if ( isArray) { -%>[<% } -%>{
 // property example <%= property %>
-},
+} <% if ( isArray) { -%>]<% } -%>,
 <% } -%>

@@ -125,7 +125,7 @@ to: ./swagger/routes/<%=  name %>Swagger.js
  *         required: true
  *         schema:
  *           type: string
- *         description: User id
+ *         description: <%= Name %> id
  *     responses:
  *       "200":
  *         description: OK
@@ -158,7 +158,7 @@ to: ./swagger/routes/<%=  name %>Swagger.js
  *         required: true
  *         schema:
  *           type: string
- *         description: User id
+ *         description: <%= Name %> id
  *     requestBody:
  *         required: true
  *         content:
@@ -177,7 +177,7 @@ to: ./swagger/routes/<%=  name %>Swagger.js
  *                   type: string
  *                   example: success
  *                 doc:
- *                     $ref: '#/components/schemas/ <%= Name %>'
+ *                     $ref: '#/components/schemas/<%= Name %>'
  *       "401":
  *         $ref: '#/components/responses/Unauthorized'
  *       "403":

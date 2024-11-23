@@ -5,7 +5,7 @@ const admin = {
   name: 'admin',
   email: process.env.ADMIN_EMAIL,
   password: process.env.ADMIN_PASSWORD,
-  role: 'admin',
+  role: 'ADMIN',
 };
 if (process.env.NODE_ENV === 'development') {
   mongoose
