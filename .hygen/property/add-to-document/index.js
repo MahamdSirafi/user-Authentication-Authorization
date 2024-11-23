@@ -159,7 +159,7 @@ module.exports = {
                         return true;
                       },
                       format: (input) => {
-                        return formatCamals(input,1);
+                        return formatCamals(input, 1);
                       },
                     })
                     .then(

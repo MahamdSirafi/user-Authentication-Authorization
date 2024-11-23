@@ -161,16 +161,10 @@ to: ./swagger/routes/<%=  name %>Swagger.js
  *         description: User id
  *     requestBody:
  *         required: true
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 status:
- *                   type: string
- *                   example: success
- *                 doc:
- *                     $ref: '#/components/schemas/update<%= Name %>'
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/update<%= Name %>'
  *     responses:
  *       "200":
  *         description: OK

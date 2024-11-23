@@ -9,7 +9,7 @@ after: // update property
 }else if (kind !== 'object'){-%>'string',<% } -%>
 <% if (kind === 'enum') 
 {-%> enum: [<% enumValue.split(" ").forEach(element => {-%>'<%= element %>',<% }) -%>]  <% } -%>
-<% if ( isArray) { -%>} <% } -%>
+<% if ( isArray && kind !== 'object') { -%>} <% } -%>
 <% if (kind !== 'object') {  -%>},<% }  -%>
 <% if (kind === 'object') {  -%>
 'object',properties: {
