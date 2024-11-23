@@ -1,7 +1,7 @@
 ---
 inject: true
 to: "./swagger/routes/<%= name %>Swagger.js"
-after: // create property <%= object %>
+after: //  create  properties <%= object %>
 ---
 <%= property %>: { type: <% if ( isArray) {-%>
 'array',items: {type:<% } -%>

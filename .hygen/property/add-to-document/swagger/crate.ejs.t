@@ -13,6 +13,6 @@ after: // create property
 <% if (kind !== 'object') {  -%>},<% }  -%>
 <% if (kind === 'object') {  -%>
 'object',properties: {
-//  properties <%= property %>
+//  create  properties <%= property %>
 }   
 <% if ( isArray) { -%> } <% } -%> },<% }  -%>

@@ -32,7 +32,6 @@ after: // \<creating\-property\-object\-<%= object %> \/\>
     <% } else if (type === 'boolean') { -%>
       type: Boolean,
       <% } -%>
-      <% } -%>
 <% } -%>
  <% if ((kind === 'reference' && referenceType === 'manyToOne' ) || kind === 'primitive') { -%>
  <% if ( isRequired  ) { -%>
@@ -40,6 +39,7 @@ after: // \<creating\-property\-object\-<%= object %> \/\>
 <% } -%>
  <%  if  (kind === 'primitive' && type === 'string' && isUnique)  { -%>
      unique: true,
+<% } -%>
 <% } -%>
 }
 <% if (kind !== 'reference' && isArray) {-%>] <% }-%>

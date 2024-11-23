@@ -138,7 +138,7 @@ to: ./swagger/routes/<%=  name %>Swagger.js
  *                   type: string
  *                   example: success
  *                 doc:
- *                     $ref: '#/components/schemas/<%= name %>'
+ *                     $ref: '#/components/schemas/<%= Name %>'
  *       "401":
  *         $ref: '#/components/responses/Unauthorized'
  *       "403":
@@ -161,10 +161,10 @@ to: ./swagger/routes/<%=  name %>Swagger.js
  *         description: User id
  *     requestBody:
  *         required: true
- *       content:
- *         application/json:
- *           schema:
- *             $ref: '#/components/schemas/update<%= Name %>'
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/update<%= Name %>'
  *     responses:
  *       "200":
  *         description: OK

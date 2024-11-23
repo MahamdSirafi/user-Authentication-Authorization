@@ -270,6 +270,17 @@ module.exports = {
       )
       .then(
         collectPromisesResults((values) => {
+          if (values.kind === 'primitive')
+            return prompter.prompt({
+              type: 'input',
+              name: 'example',
+              message: 'set example for swagger :',
+            });
+          return;
+        }),
+      )
+      .then(
+        collectPromisesResults((values) => {
           if (!values.type) {
             values.type = 'user';
           }
