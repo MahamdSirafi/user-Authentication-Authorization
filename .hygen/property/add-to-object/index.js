@@ -3,25 +3,28 @@ const collectPromisesResults = (callback) => async (prevValues) => {
 
   return { ...prevValues, ...results };
 };
-const formatCamals = (input) => {
+const formatCamals = (input, index) => {
   let arr = input.trim().split(' ');
-  for (let i = 1; i < arr.length; i++)
+  let i = index;
+  for (i; i < arr.length; i++)
     if (arr[i]) {
       arr[i] = arr[i][0].toUpperCase() + arr[i].slice(1);
     }
   return arr.join('');
 };
 const eqValueFormat = (values, field) => {
-  values[field] = values[field]
+  values[field.charAt(0).toUpperCase() + field.slice(1)] = values[field]
     .trim()
     .split(' ')
     .map((word, index) => {
-      if (index == 0) return word;
       return word[0].toUpperCase() + word.slice(1);
     })
     .join('');
-  values[field.charAt(0).toUpperCase() + field.slice(1)] =
-    values[field].charAt(0).toUpperCase() + values[field].slice(1);
+  values[field] =
+    values[field.charAt(0).toUpperCase() + field.slice(1)]
+      .charAt(0)
+      .toLowerCase() +
+    values[field.charAt(0).toUpperCase() + field.slice(1)].slice(1);
   return values;
 };
 
@@ -40,7 +43,7 @@ module.exports = {
           return true;
         },
         format: (input) => {
-          return formatCamals(input);
+          return formatCamals(input, 0);
         },
       })
       .then(
@@ -61,7 +64,7 @@ module.exports = {
               return true;
             },
             format: (input) => {
-              return formatCamals(input);
+              return formatCamals(input, 1);
             },
           });
         }),
@@ -85,7 +88,7 @@ module.exports = {
               return true;
             },
             format: (input) => {
-              return formatCamals(input);
+              return formatCamals(input, 1);
             },
           });
         }),
@@ -131,7 +134,7 @@ module.exports = {
                         return true;
                       },
                       format: (input) => {
-                        return formatCamals(input);
+                        return formatCamals(input, 0);
                       },
                     })
                     .then(
@@ -179,7 +182,7 @@ module.exports = {
                         return true;
                       },
                       format: (input) => {
-                        return formatCamals(input);
+                        return formatCamals(input, 1);
                       },
                     })
                     .then(
