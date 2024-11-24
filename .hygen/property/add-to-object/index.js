@@ -270,6 +270,16 @@ module.exports = {
       )
       .then(
         collectPromisesResults((values) => {
+          return prompter.prompt({
+            type: 'confirm',
+            name: 'hiddenSwagger',
+            message: 'do you want a hidden field.',
+            initial: false,
+          });
+        }),
+      )
+      .then(
+        collectPromisesResults((values) => {
           if (values.kind === 'primitive')
             return prompter.prompt({
               type: 'input',

@@ -3,6 +3,7 @@ inject: true
 to: "./swagger/routes/<%= name %>Swagger.js"
 after: // update property
 ---
+<% if(!hiddenSwagger){ -%>
 <%= property %>: { type: <% if ( isArray) {-%>
 'array',items: {type:<% } -%>
 <% if (kind === 'primitive') { -%>'<%= type %>',<% 
@@ -16,3 +17,4 @@ after: // update property
 //  update properties <%= property %>
 }   
 <% if ( isArray) { -%> } <% } -%> },<% }  -%>
+<% } -%>
