@@ -2,6 +2,7 @@ const crypto = require('crypto');
 const mongoose = require('mongoose');
 const validator = require('validator');
 const bcrypt = require('bcryptjs');
+const { RoleCode } = require('../utils/enum');
 const userSchema = new mongoose.Schema(
   {
     name: {
@@ -22,8 +23,8 @@ const userSchema = new mongoose.Schema(
     },
     role: {
       type: String,
-      enum: ['user', 'admin'],
-      default: 'user',
+      enum: Object.values(RoleCode),
+      default: 'USER',
     },
     password: {
       type: String,
@@ -45,6 +46,7 @@ const userSchema = new mongoose.Schema(
   },
   { versionKey: false },
 );
+// <creating-function-schema />
 userSchema.pre('save', async function (next) {
   // Only run this function if password was actually modified
   if (!this.isModified('password')) return next();
