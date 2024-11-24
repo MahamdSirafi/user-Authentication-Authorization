@@ -228,8 +228,10 @@ exports.<%= Name %> = {
 // property
   },
   example: {
-    id: '5ebac534954b54139806c112',
+    _id: '5ebac534954b54139806c112',
 // property example
+   createdAt: "2024-11-24T16:35:04.438Z",
+   updatedAt: "2024-11-24T16:35:04.438Z"
   },
 };
 exports.create<%= Name %> = {
@@ -239,6 +241,8 @@ exports.create<%= Name %> = {
   },
   example: {
 // create property example
+  createdAt: "2024-11-24T16:35:04.438Z",
+  updatedAt: "2024-11-24T16:35:04.438Z"
   },
   required:[
 // required property
@@ -251,6 +255,8 @@ exports.update<%= Name %> = {
   },
   example: {
 // update property example
+ createdAt: "2024-11-24T16:35:04.438Z",
+ updatedAt: "2024-11-24T16:35:04.438Z"
   },
 };
 

@@ -7,7 +7,7 @@ after: "// <creating-function-schema />"
   <% if (referenceType === 'oneToOne' || referenceType === 'manyToOne') { -%>
   <%= name %>Schema.pre(/^find/, function (next) {
   this.populate({
-    path: '<%= property %>Id',
+    path: '<%= object %>.<%= property %>Id',
     select: '-_id',
   });
   next();
@@ -15,7 +15,7 @@ after: "// <creating-function-schema />"
   <% } else { -%>
   <%= name %>Schema.pre(/^find/, function (next) {
   this.populate({
-    path: '<%= property %>Ids',
+    path: '<%= object %>.<%= property %>Ids',
     select: '-_id',
   });
   next();
