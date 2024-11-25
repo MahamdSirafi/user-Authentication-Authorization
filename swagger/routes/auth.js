@@ -16,27 +16,7 @@
  *       content:
  *         application/json:
  *           schema:
- *             type: object
- *             required:
- *               - name
- *               - email
- *               - password
- *             properties:
- *               name:
- *                 type: string
- *               email:
- *                 type: string
- *                 format: email
- *                 description: must be unique
- *               password:
- *                 type: string
- *                 format: password
- *                 minLength: 8
- *                 description: At least one number and one letter
- *             example:
- *               name: fake name
- *               email: fake@example.com
- *               password: password1
+ *             $ref: '#/components/schemas/signUp'
  *     responses:
  *       "201":
  *         description: Created
@@ -82,8 +62,8 @@
  *                 type: string
  *                 format: password
  *             example:
- *               email: fake@example.com
- *               password: password1
+ *               email: user@gmail.com
+ *               password: 123454321
  *     responses:
  *       "200":
  *         description: OK
@@ -245,30 +225,24 @@
  *         $ref: '#/components/responses/NotFound'
  */
 
-exports.updateMe = {
-  type: 'object',
-  properties: {
-    name: { type: 'string' },
-    email: { type: 'string' },
-    photo: { type: 'string' },
-  },
-  example: {
-    name: 'bahaa',
-    email: 'bahaa@gmail.com',
-    photo: './public/img/users/dafult.jpg',
-  },
-};
 exports.signUp = {
   type: 'object',
-  required: ['name', 'email', 'password'],
+  required: [
+    // required property
+    'name',
+    'email',
+    'password',
+  ],
   properties: {
+    //  property signup
     name: { type: 'string' },
     email: { type: 'string' },
     password: { type: 'string' },
   },
   example: {
-    name: 'bahaa',
-    email: 'bahaa@gmail.com',
-    password: 'test1234',
+    // create property example
+    name: 'Adel Seirafi',
+    email: 'user@gmail.com',
+    password: '123454321',
   },
 };

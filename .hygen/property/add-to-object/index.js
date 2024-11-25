@@ -146,19 +146,19 @@ module.exports = {
                           message: 'Select type of reference',
                           choices: [
                             {
-                              message: `One to one (${rootValues.name} contains only one instance of ${referenceValues.type}, and ${referenceValues.type} contains only one instance of ${rootValues.name}. ${rootValues.property}: ${referenceValues.type})`,
+                              message: `One to one (${rootValues.object} contains only one instance of ${referenceValues.type}, and ${referenceValues.type} contains only one instance of ${rootValues.object}. ${rootValues.property}: ${referenceValues.type})`,
                               value: 'oneToOne',
                             },
                             {
-                              message: `One to many (${rootValues.name} contains multiple instances of ${referenceValues.type}, but ${referenceValues.type} contains only one instance of ${rootValues.name}. ${rootValues.property}: ${referenceValues.type}[])`,
+                              message: `One to many (${rootValues.object} contains multiple instances of ${referenceValues.type}, but ${referenceValues.type} contains only one instance of ${rootValues.object}. ${rootValues.property}: ${referenceValues.type}[])`,
                               value: 'oneToMany',
                             },
                             {
-                              message: `Many to one (${rootValues.name} contains only one instance of ${referenceValues.type}, but ${referenceValues.type} contains multiple instances of ${rootValues.name}. ${rootValues.property}: ${referenceValues.type})`,
+                              message: `Many to one (${rootValues.object} contains only one instance of ${referenceValues.type}, but ${referenceValues.type} contains multiple instances of ${rootValues.object}. ${rootValues.property}: ${referenceValues.type})`,
                               value: 'manyToOne',
                             },
                             {
-                              message: `Many to many (${rootValues.name} contains multiple instances of ${referenceValues.type}, and ${referenceValues.type} contains multiple instances of ${rootValues.name}. ${rootValues.property}: ${referenceValues.type}[])`,
+                              message: `Many to many (${rootValues.object} contains multiple instances of ${referenceValues.type}, and ${referenceValues.type} contains multiple instances of ${rootValues.object}. ${rootValues.property}: ${referenceValues.type}[])`,
                               value: 'manyToMany',
                             },
                           ],

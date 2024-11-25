@@ -1,6 +1,6 @@
 const swaggerJsDoc = require('swagger-jsdoc');
-const { updateMe, signUp } = require('./routes/auth');
-const { User } = require('./routes/users');
+const { signUp } = require('./routes/auth');
+const { User, updateMe } = require('./routes/users');
 const {
   DuplicateEmail,
   Error,

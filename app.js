@@ -85,11 +85,6 @@ app.all('*', (req, res, next) => {
 });
 app.use(errorGlobal);
 
-// process.on('uncaughtException', (err) => {
-//   console.log('UNCAUGHT EXCEPTION! 💥 Shutting down...');
-//   console.log(err.name, err.message);
-//   process.exit(1);
-// });
 //4)
 mongoose
   .connect(process.env.DATABASE_LOCAL)
@@ -104,20 +99,6 @@ Example app listening at http://localhost:${process.env.PORT}/docs`,
   .catch((err) => {
     console.log(err);
   });
-
-// process.on('unhandledRejection', (err) => {
-//   console.log('UNHANDLED REJECTION! 💥 Shutting down...');
-//   console.log(err.name, err.message);
-//   server.close(() => {
-//     process.exit(1);
-//   });
-// });
-// process.on('SIGTERM', () => {
-//   console.log('👋 SIGTERM RECEIVED. Shutting down gracefully');
-//   server.close(() => {
-//     console.log('💥 Process terminated!');
-//   });
-// });
 
 // //4) اتصال مع قاعدة البيانات الخارجية في اطلس باستخدام مكتبة مونغوس
 // const DB = process.env.DATABASE.replace(

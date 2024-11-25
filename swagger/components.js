@@ -16,7 +16,10 @@ exports.Unauthorized = {
   content: {
     'application/json': {
       schema: { $ref: '#/components/schemas/Error' },
-      example: { status: 'error', message: 'Please authenticate' },
+      example: {
+        status: 'error',
+        message: 'You are not logged in! Please log in to get access.',
+      },
     },
   },
 };
@@ -25,7 +28,10 @@ exports.Forbidden = {
   content: {
     'application/json': {
       schema: { $ref: '#/components/schemas/Error' },
-      example: { status: 'error', message: 'Forbidden' },
+      example: {
+        status: 'error',
+        message: 'You do not have permission to perform this action',
+      },
     },
   },
 };
@@ -35,7 +41,10 @@ exports.NotFound = {
   content: {
     'application/json': {
       schema: { $ref: '#/components/schemas/Error' },
-      example: { status: 'error', message: 'Not found' },
+      example: {
+        status: 'error',
+        message: "Can't find  /cars/id   on this server!",
+      },
     },
   },
 };

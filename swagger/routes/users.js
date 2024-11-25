@@ -181,7 +181,7 @@
  *               role:
  *                 type: string
  *             example:
- *               role: admin
+ *               role: ADMIN
  *     responses:
  *       "200":
  *         description: OK
@@ -415,22 +415,41 @@
  *         $ref: '#/components/responses/NotFound'
  */
 
+const { RoleCode } = require('../../utils/enum');
 exports.User = {
   type: 'object',
   properties: {
     id: { type: 'string' },
+    // property
     email: { type: 'string', format: 'email' },
     name: { type: 'string' },
-    role: { type: 'string', enum: ['user', 'admin'] },
+    role: { type: 'string', enum: Object.values(RoleCode) },
     photo: { type: 'string' },
     active: { type: 'string' },
   },
   example: {
     id: '5ebac534954b54139806c112',
-    email: 'fake@example.com',
-    name: 'fake name',
-    role: 'user',
+    // property example
+    email: 'user@gmail.com',
+    name: 'adel seirafi',
+    role: 'USER',
     photo: './public/img/dafult.jpg',
     active: 'true',
+  },
+};
+
+exports.updateMe = {
+  type: 'object',
+  properties: {
+    // update property
+    name: { type: 'string' },
+    email: { type: 'string' },
+    photo: { type: 'string' },
+  },
+  example: {
+    // update property example
+    name: 'Mohammed Seirafi',
+    email: 'adel@gmail.com',
+    photo: './public/img/users/dafult.jpg',
   },
 };
