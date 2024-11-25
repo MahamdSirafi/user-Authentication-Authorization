@@ -35,6 +35,7 @@
   },
   "scripts": {
     "start": "nodemon app.js",
+    "seed:dev": "node run seeds.js",
     "format": "prettier --write \"**/*.js\" ",
     "generate:resource:document": "hygen generate document-resource",
     "postgenerate:resource:document": "npm run format",

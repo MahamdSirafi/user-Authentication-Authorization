@@ -102,6 +102,15 @@ This guide explains how to set up an `.env` file to configure environment variab
 
 Update all variables in the `.env` file with your own values:
 
+## Database Seed
+
+- create an admin user in the database by
+
+```
+$ npm run seed:dev
+```
+
+
 ## Create document by hygen library
 
     ```bash
