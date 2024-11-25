@@ -13,8 +13,7 @@ after: "// <creating-function-schema />"
       return next(new AppError("error deleting <%= h.inflection.pluralize(name) %>s", 500));
     }
   }
-});
-  <% } else { -%>
+});<% } else { -%>
   <%=  type %>Schema.post("findOneAndDelete", async function (doc) {
   if (doc) {
     try {
@@ -23,7 +22,4 @@ after: "// <creating-function-schema />"
       return next(new AppError("error deleting <%= h.inflection.pluralize(name) %>s", 500));
     }
   }
-});
-  <% } -%>
-<%  console.log("mas") %>
-<% } -%>
+});<% } -%><% } -%>

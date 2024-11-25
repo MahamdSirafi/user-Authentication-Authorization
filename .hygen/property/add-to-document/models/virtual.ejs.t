@@ -11,14 +11,11 @@ after: "// <creating-function-schema />"
     select: '-_id',
   });
   next();
-});
-  <% } else { -%>
+});<% } else { -%>
   <%= name %>Schema.pre(/^find/, function (next) {
   this.populate({
     path: '<%= property %>Ids',
     select: '-_id',
   });
   next();
-});
-<% } -%>
-<% } -%>
+});<% } -%><% } -%>
