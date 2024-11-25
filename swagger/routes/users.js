@@ -19,32 +19,7 @@
  *       content:
  *         application/json:
  *           schema:
- *             type: object
- *             required:
- *               - name
- *               - email
- *               - password
- *               - role
- *             properties:
- *               name:
- *                 type: string
- *               email:
- *                 type: string
- *                 format: email
- *                 description: must be unique
- *               password:
- *                 type: string
- *                 format: password
- *                 minLength: 8
- *                 description: At least one number and one letter
- *               role:
- *                  type: string
- *                  enum: [user, admin]
- *             example:
- *               name: fake name
- *               email: fake@example.com
- *               password: password1
- *               role: user
+ *             $ref: '#/components/schemas/createUser'
  *     responses:
  *       "201":
  *         description: Created
@@ -83,10 +58,10 @@
  *           type: string
  *         description: User role
  *       - in: query
- *         name: sortBy
+ *         name: sort
  *         schema:
  *           type: string
- *         description: sort by query in the form of field:desc/asc (ex. name:asc)
+ *         description: sort by query in the form of field:desc/asc (ex. -name or name)
  *       - in: query
  *         name: limit
  *         schema:
@@ -262,8 +237,6 @@
  *                     $ref: '#/components/schemas/User'
  *       "401":
  *         $ref: '#/components/responses/Unauthorized'
- *       "403":
- *         $ref: '#/components/responses/Forbidden'
  */
 
 /**
@@ -288,8 +261,6 @@
  *                   example: success
  *       "401":
  *         $ref: '#/components/responses/Unauthorized'
- *       "403":
- *         $ref: '#/components/responses/Forbidden'
  */
 
 /**
@@ -314,8 +285,6 @@
  *                   example: success
  *       "401":
  *         $ref: '#/components/responses/Unauthorized'
- *       "403":
- *         $ref: '#/components/responses/Forbidden'
  */
 
 /**
@@ -332,21 +301,7 @@
  *       content:
  *         application/json:
  *           schema:
- *             type: object
- *             properties:
- *               name:
- *                 type: string
- *               email:
- *                 type: string
- *                 format: email
- *                 description: must be unique
- *               photo:
- *                 type: string
- *                 description: path photo
- *             example:
- *               name: fake name
- *               email: fake@example.com
- *               photo: ./public/img/users/dafult.jpg
+ *             $ref: '#/components/schemas/updateMe'
  *     responses:
  *       "200":
  *         description: OK
@@ -366,8 +321,6 @@
  *         $ref: '#/components/responses/Unauthorized'
  *       "403":
  *         $ref: '#/components/responses/Forbidden'
- *       "404":
- *         $ref: '#/components/responses/NotFound'
  */
 
 /**
@@ -388,10 +341,6 @@
  *             properties:
  *               photo:
  *                 type: file
- *               email:
- *                 type: string
- *               name:
- *                 type: string
  *     responses:
  *       "200":
  *         description: OK
@@ -411,8 +360,6 @@
  *         $ref: '#/components/responses/Unauthorized'
  *       "403":
  *         $ref: '#/components/responses/Forbidden'
- *       "404":
- *         $ref: '#/components/responses/NotFound'
  */
 
 const { RoleCode } = require('../../utils/enum');
@@ -435,6 +382,25 @@ exports.User = {
     role: 'USER',
     photo: './public/img/dafult.jpg',
     active: 'true',
+  },
+};
+exports.createUser = {
+  type: 'object',
+  properties: {
+    // create property
+    name: { type: 'string' },
+    email: { type: 'string' },
+    password: { type: 'string' },
+    photo: { type: 'string' },
+    role: { type: 'string', enum: Object.values(RoleCode) },
+  },
+  example: {
+    // create property example
+    name: 'Mohammed Seirafi',
+    email: 'adel@gmail.com',
+    password: '123454321',
+    photo: './public/img/users/dafult.jpg',
+    role: 'USER',
   },
 };
 

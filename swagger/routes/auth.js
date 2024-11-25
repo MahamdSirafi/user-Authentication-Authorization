@@ -30,7 +30,7 @@
  *                   example: success
  *                 user:
  *                   $ref: '#/components/schemas/User'
- *                 tokens:
+ *                 token:
  *                   type: string
  *                   example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2MWQ4ZDJjZjBkMmM5NWNiOTM5OTgyZSIsImlhdCI6MTcxMzIxMjcxNywiZXhwIjoxNzIwOTg4NzE3fQ.FbARIC4jDWtOb0koNJK69F2MTu8j9LeS3RaFrT-AP7c
  *       "400":
@@ -63,7 +63,7 @@
  *                 format: password
  *             example:
  *               email: user@gmail.com
- *               password: 123454321
+ *               password: "123454321"
  *     responses:
  *       "200":
  *         description: OK
@@ -78,8 +78,9 @@
  *                      status: success
  *                 user:
  *                   $ref: '#/components/schemas/User'
- *                 tokens:
- *                    type: string
+ *                 token:
+ *                   type: string
+ *                   example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2MWQ4ZDJjZjBkMmM5NWNiOTM5OTgyZSIsImlhdCI6MTcxMzIxMjcxNywiZXhwIjoxNzIwOTg4NzE3fQ.FbARIC4jDWtOb0koNJK69F2MTu8j9LeS3RaFrT-AP7c
  *       "401":
  *         description: Invalid email or password
  *         content:
@@ -154,7 +155,7 @@
  *                      example: success
  *                    token:
  *                      type: string
- *                      example: f2hgf3124g2hf4h12g4hg12f4hg1f2h3g12h4f1h2gg12hf41g2f4hg12fh221g4f1h
+ *                      example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2MWQ4ZDJjZjBkMmM5NWNiOTM5OTgyZSIsImlhdCI6MTcxMzIxMjcxNywiZXhwIjoxNzIwOTg4NzE3fQ.FbARIC4jDWtOb0koNJK69F2MTu8j9LeS3RaFrT-AP7c
  *          "401":
  *            description: Password reset failed
  *            content:
@@ -193,15 +194,20 @@
  *         "401":
  *           $ref: '#/components/responses/401'
  *         "200":
- *           description: Password has been updated successfully
+ *           description: Created
  *           content:
  *             application/json:
  *               schema:
  *                 type: object
  *                 properties:
- *                   message:
+ *                   status:
  *                     type: string
- *                     description: Password has been updated successfully
+ *                     example: success
+ *                   user:
+ *                     $ref: '#/components/schemas/User'
+ *                   token:
+ *                     type: string
+ *                     example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2MWQ4ZDJjZjBkMmM5NWNiOTM5OTgyZSIsImlhdCI6MTcxMzIxMjcxNywiZXhwIjoxNzIwOTg4NzE3fQ.FbARIC4jDWtOb0koNJK69F2MTu8j9LeS3RaFrT-AP7c
  */
 
 /**
@@ -221,8 +227,9 @@
  *                 status:
  *                   type: string
  *                   example: success
- *       "404":
- *         $ref: '#/components/responses/NotFound'
+ *                 token:
+ *                   type: string
+ *                   example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2MWQ4ZDJjZjBkMmM5NWNiOTM5OTgyZSIsImlhdCI6MTcxMzIxMjcxNywiZXhwIjoxNzIwOTg4NzE3fQ.FbARIC4jDWtOb0koNJK69F2MTu8j9LeS3RaFrT-AP7c
  */
 
 exports.signUp = {

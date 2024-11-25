@@ -1,6 +1,6 @@
 const swaggerJsDoc = require('swagger-jsdoc');
 const { signUp } = require('./routes/auth');
-const { User, updateMe } = require('./routes/users');
+const { User, updateMe, createUser } = require('./routes/users');
 const {
   DuplicateEmail,
   Error,
@@ -28,6 +28,7 @@ const options = {
     components: {
       schemas: {
         signUp,
+        createUser,
         updateMe,
         User,
         Error,
