@@ -5,6 +5,7 @@ const bcrypt = require('bcryptjs');
 const { RoleCode } = require('../utils/enum');
 const userSchema = new mongoose.Schema(
   {
+    // <creating-property-schema />
     name: {
       type: String,
       required: [true, 'Please tell us your name!'],
