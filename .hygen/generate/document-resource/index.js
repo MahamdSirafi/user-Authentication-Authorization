@@ -56,7 +56,7 @@ module.exports = {
           return prompter.prompt({
             type: 'multiselect',
             name: 'roleGet',
-            message: 'choise role for GET',
+            message: 'choose role for GET',
             choices: Object.keys(RoleCode).map((key, index) => {
               return { name: key, value: key };
             }),
@@ -69,7 +69,7 @@ module.exports = {
           return prompter.prompt({
             type: 'multiselect',
             name: 'rolePost',
-            message: 'choise role for Post',
+            message: 'choose role for Post',
             choices: Object.keys(RoleCode).map((key, index) => {
               return { name: key, value: key };
             }),
@@ -82,7 +82,7 @@ module.exports = {
           return prompter.prompt({
             type: 'multiselect',
             name: 'roleDelete',
-            message: 'choise role for Delete',
+            message: 'choose role for Delete',
             choices: Object.keys(RoleCode).map((key, index) => {
               return { name: key, value: key };
             }),
@@ -94,7 +94,7 @@ module.exports = {
           return prompter.prompt({
             type: 'multiselect',
             name: 'roleUpdate',
-            message: 'choise role for update',
+            message: 'choose role for update',
             choices: Object.keys(RoleCode).map((key, index) => {
               return { name: key, value: key };
             }),

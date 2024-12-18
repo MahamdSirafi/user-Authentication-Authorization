@@ -37,13 +37,13 @@ router
   .get(
     authMiddlewers.protect,
     authMiddlewers.isactive,
-    authMiddlewers.restrictTo('admin'),
+    authMiddlewers.restrictTo('ADMIN'),
     userController.getAllUsers,
   )
   .post(
     authMiddlewers.protect,
     authMiddlewers.isactive,
-    authMiddlewers.restrictTo('admin'),
+    authMiddlewers.restrictTo('ADMIN'),
     userController.createUser,
   );
 router
@@ -51,19 +51,19 @@ router
   .get(
     authMiddlewers.protect,
     authMiddlewers.isactive,
-    authMiddlewers.restrictTo('admin'),
+    authMiddlewers.restrictTo('ADMIN'),
     userController.getUser,
   )
   .patch(
     authMiddlewers.protect,
     authMiddlewers.isactive,
-    authMiddlewers.restrictTo('admin'),
+    authMiddlewers.restrictTo('ADMIN'),
     userController.updateUser,
   )
   .delete(
     authMiddlewers.protect,
     authMiddlewers.isactive,
-    authMiddlewers.restrictTo('admin'),
+    authMiddlewers.restrictTo('ADMIN'),
     userController.deleteUser,
   );
 module.exports = router;
