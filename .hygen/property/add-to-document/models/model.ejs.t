@@ -40,7 +40,7 @@ after:  \<creating\-property\-schema \/\>
 <% } -%>
  <% if ((kind === 'reference' && referenceType === 'manyToOne' ) || kind === 'primitive') { -%>
  <% if ( isRequired  ) { -%>
-     required: [true, 'Please enter name  <%= property %>'],
+     required: [true, 'Please enter <%= property %>'],
 <% } -%>
  <%  if  (kind === 'primitive' && type === 'string' && isUnique)  { -%>
      unique: true,
