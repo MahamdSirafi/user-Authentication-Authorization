@@ -75,10 +75,12 @@ app.use(
 app.use(compression());
 //R <dont remove this line>
 const userRouter = require('./routes/userRoutes');
+const imageRouter = require('./routes/imageRoutes');
 
 app.use('/docs', swaggerUI.serve, swaggerUI.setup(swaggerSpec));
 //ROUTES <dont remove this line>
 app.use('/api/v1.0.0/users', userRouter);
+app.use('/api/v1.0.0/images', imageRouter);
 //في حال طلب مورد غير موجود
 app.all('*', (req, res, next) => {
   next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));

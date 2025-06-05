@@ -67,6 +67,9 @@ const options = {
         404: {
           description: 'Not found',
         },
+        413: {
+          description: 'Payload Too Large',
+        },
         500: {
           description: 'Internal server error',
         },
