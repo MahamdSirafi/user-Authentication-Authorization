@@ -48,17 +48,16 @@ const userSchema = new mongoose.Schema(
   { versionKey: false },
 );
 // <creating-function-schema />
-userSchema.pre('save', async function (next) {
-  // Only run this function if password was actually modified
-  if (!this.isModified('password')) return next();
-  // Hash the password with cost of 12
+userSchema.pre('save', async function () {
+  if (!this.isModified('password')) return;
+
   this.password = await bcrypt.hash(this.password, 12);
-  next();
 });
-userSchema.pre('save', function (next) {
-  if (!this.isModified('password') || this.isNew) return next();
+
+userSchema.pre('save', function () {
+  if (!this.isModified('password') || this.isNew) return;
+
   this.passwordChangedAt = Date.now() - 1000;
-  next();
 });
 
 userSchema.methods.correctPassword = async function (

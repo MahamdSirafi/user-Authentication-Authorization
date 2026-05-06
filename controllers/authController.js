@@ -4,12 +4,14 @@ const catchAsync = require('../utils/catchAsync');
 const AppError = require('./../utils/appError');
 const Email = require('../config/email');
 const crypto = require('crypto');
+
 const signToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET, {
     expiresIn: process.env.JWT_EXPIRES_IN,
   });
 };
-createSendToken = (user, statusCode, req, res) => {
+
+const createSendToken = (user, statusCode, req, res) => {
   const token = signToken(user._id);
   res.cookie('jwt', token, {
     expires: new Date(
@@ -26,20 +28,27 @@ createSendToken = (user, statusCode, req, res) => {
     user,
   });
 };
+
 exports.signup = catchAsync(async (req, res, next) => {
   const newUser = await User.create({
     name: req.body.name,
     email: req.body.email,
     password: req.body.password,
-  //  property signup
+    //  property signup
   });
+
   const url = `${req.protocol}://${req.get('host')}/me`;
-  await new Email(newUser, url).welcomeMailerSend();
-  // .catch(async (er) => {
-  //   await User.deleteOne({ id: newUser.id });
-  // });
+
+  try {
+    await new Email(newUser, url).sendWelcome();
+  } catch (er) {
+    await User.deleteOne({ _id: newUser._id });
+    return next(er);
+  }
+
   createSendToken(newUser, 201, req, res);
 });
+
 exports.login = catchAsync(async (req, res, next) => {
   const { email, password } = req.body;
   // 1) Check if email and password exist
@@ -54,6 +63,7 @@ exports.login = catchAsync(async (req, res, next) => {
   // 3) If everything ok, send token to client
   createSendToken(user, 200, req, res);
 });
+
 exports.logout = (req, res) => {
   res.cookie('jwt', 'loggedout', {
     expires: new Date(Date.now() + 10 * 1000),
@@ -77,7 +87,7 @@ exports.forgotPassword = catchAsync(async (req, res, next) => {
     const resetURL = `${req.protocol}://${req.get('host')}${req.originalUrl
       .split('/', 4)
       .join('/')}/resetPassword/${resetToken}`;
-    await new Email(user, resetURL).sendPasswordResetMailerSend();
+    await new Email(user, resetURL).sendPasswordReset();
     res.status(200).json({
       status: 'success',
       message: 'Token sent to email!',

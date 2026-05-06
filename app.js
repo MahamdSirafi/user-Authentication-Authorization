@@ -2,8 +2,6 @@ const express = require('express');
 const morgan = require('morgan');
 const rateLimit = require('express-rate-limit');
 const helmet = require('helmet');
-const mongoSanitize = require('express-mongo-sanitize');
-const xss = require('xss-clean');
 const hpp = require('hpp');
 const cookieParser = require('cookie-parser');
 const compression = require('compression');
@@ -25,8 +23,6 @@ app.use(cors());
 // app.use(cors({
 //   origin: 'https://www.website.com'
 // }))
-//السماح بالاتصال على جميع الموارد
-app.options('*', cors());
 //تحديد المسار او المورد المسموح الاتصال به
 // app.options('/api/v1/resource', cors());
 
@@ -56,13 +52,6 @@ app.use(express.urlencoded({ extended: true, limit: '10kb' }));
 app.use(cookieParser());
 app.set('view engine', 'ejs');
 app.use(express.static('public'));
-// Data sanitization against NoSQL query injection
-// لمنع استلام بينات تشابه تعليمات قاعدة البيانات
-app.use(mongoSanitize());
-
-// Data sanitization against XSS
-// html تعديل البيانات القادمة على شكل
-app.use(xss());
 
 // Prevent parameter pollution
 // منع تكرار الحقول داخل الروت الى للحالات التالية
@@ -82,7 +71,7 @@ app.use('/docs', swaggerUI.serve, swaggerUI.setup(swaggerSpec));
 app.use('/api/v1.0.0/users', userRouter);
 app.use('/api/v1.0.0/images', imageRouter);
 //في حال طلب مورد غير موجود
-app.all('*', (req, res, next) => {
+app.use((req, res, next) => {
   next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
 });
 app.use(errorGlobal);
